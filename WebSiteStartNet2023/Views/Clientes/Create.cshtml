@@ -1,0 +1,54 @@
+﻿@model WebSiteStartNet2023.Models.Cliente
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Cliente</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NombreFantasia" class="control-label"></label>
+                <input asp-for="NombreFantasia" class="form-control" />
+                <span asp-validation-for="NombreFantasia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NombreLogo" class="control-label"></label>
+                <input asp-for="NombreLogo" class="form-control" />
+                <span asp-validation-for="NombreLogo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fecha" class="control-label"></label>
+                <input asp-for="Fecha" class="form-control" />
+                <span asp-validation-for="Fecha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Orden" class="control-label"></label>
+                <input asp-for="Orden" class="form-control" />
+                <span asp-validation-for="Orden" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="VisibleEnHome" /> @Html.DisplayNameFor(model => model.VisibleEnHome)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdRubroCliente" class="control-label"></label>
+                <select asp-for="IdRubroCliente" class ="form-control" asp-items="ViewBag.IdRubroCliente"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<WebSiteStartNet2023.Models.Novedad>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Novedades</h1>
+
+<p>
+    <a asp-action="Create">Crear Novedad</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Detalle)
+            </th>
+            <th>
+                @Html.DisplayName("Foto")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Detalle)
+            </td>
+            <td>
+                    <img width="150em" height="auto" class="img-fluid" src="~/Data/Imagenes/Novedades/@item.NombreFoto">
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalle</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Borrar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

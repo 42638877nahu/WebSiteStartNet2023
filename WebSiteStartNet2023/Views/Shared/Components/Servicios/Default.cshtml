@@ -1,0 +1,8 @@
+﻿@model List<WebSiteStartNet2023.Models.Servicio>
+
+@{
+    foreach (var item in Model)
+    {
+        <a asp-controller="Servicios" asp-action="Details" asp-route-id="@item.Id" class="dropdown-item">@item.Nombre</a>
+    }
+}

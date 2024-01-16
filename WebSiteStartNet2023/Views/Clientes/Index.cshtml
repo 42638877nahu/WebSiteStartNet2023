@@ -1,0 +1,100 @@
+﻿@model IEnumerable<WebSiteStartNet2023.Models.Cliente>
+
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<div class="container-fluid position-relative p-0">
+    <div class="container-fluid bg-primary py-5 bg-header">
+        <div class="row py-5">
+            <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                <h1 class="display-4 text-white animated zoomIn">Clientes</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-12">
+                <div class="row g-5">
+                    @foreach (var item in ViewBag.Rubros)
+                    {
+                        <h5>@item.Nombre</h5>
+                        <ul>
+                            @foreach (var i in Model)
+                            {
+                                if (i.RubroCliente.Id == item.Id)
+                                {
+                                    <li>@i.NombreFantasia</li>
+                                }
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreFantasia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreLogo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orden)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VisibleEnHome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RubroCliente)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreFantasia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreLogo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Orden)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VisibleEnHome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RubroCliente.Nombre)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+*@
