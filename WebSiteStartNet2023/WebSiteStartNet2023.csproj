@@ -23,6 +23,7 @@
   <ItemGroup>
     <Folder Include="Areas\ContentAdmin\Data\" />
     <Folder Include="Areas\ContentAdmin\Models\" />
+    <Folder Include="expire\" />
   </ItemGroup>
 
   <ItemGroup>
