@@ -43,6 +43,8 @@ namespace WebSiteStartNet2023.Controllers
                 return NotFound();
             }
 
+            ViewBag.Novedades = _context.Novedades.OrderByDescending(x=>x.Fecha).Take(10);
+
             return View(novedad);
         }
 

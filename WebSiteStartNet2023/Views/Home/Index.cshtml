@@ -226,15 +226,15 @@
             {
                 <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
                     <div class="blog-item bg-light rounded overflow-hidden">
-                        <div class="blog-img position-relative overflow-hidden">
-                            <img class="img-fluid" src="~/Data/Imagenes/Novedades/@item.NombreFoto">
+                        <div class="blog-img position-relative overflow-hidden text-center">
+                            <img width="auto" height="265px" src="~/Data/Imagenes/Novedades/@item.NombreFoto">
                         </div>
                         <div class="p-4">
                             <div class="d-flex mb-3">
                                 <small><i class="far fa-calendar-alt text-primary me-2"></i>@item.Fecha.ToShortDateString()</small>
                             </div>
                             <h4 class="mb-3">@item.Titulo</h4>
-                            <p>@item.Detalle</p>
+                            @*<p>@item.Detalle</p>*@
                             <a class="text-uppercase" asp-controller="Novedades" asp-action="Details" asp-route-id="@item.Id">Leer Más<i class="bi bi-arrow-right"></i></a>
                         </div>
                     </div>

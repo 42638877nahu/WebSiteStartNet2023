@@ -27,8 +27,26 @@
                         @Model.Detalle
                     </p>
                 </div>
+                <a asp-controller="Novedades" asp-action="Index">Volver</a>
                 <!-- Blog Detail End -->
             </div>
+            <!-- Sidebar Start -->
+            <div class="col-lg-4">
+                <!-- Category Start -->
+                <div class="mb-5 wow slideInUp" data-wow-delay="0.1s">
+                    <div class="section-title section-title-sm position-relative pb-3 mb-4">
+                        <h3 class="mb-0">Últimos Artículos</h3>
+                    </div>
+                    <div class="link-animated d-flex flex-column justify-content-start">
+                         @foreach (var item in ViewBag.Novedades)
+                        {
+                            <a class="h5 fw-semi-bold bg-light rounded py-2 px-3 mb-2" asp-controller="Novedades" asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-arrow-right me-2"></i>@item.Titulo</a>
+                        }
+                    </div>
+                </div>
+                <!-- Category End -->
+            </div>
+            <!-- Sidebar End -->
         </div>
     </div>
 </div>

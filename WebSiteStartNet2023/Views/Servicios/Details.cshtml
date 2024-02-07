@@ -32,6 +32,44 @@
                                 <img class="img-fluid" src="~/Data/Imagenes/Servicios/@Model.NombreHome" alt="">
                             </div>
                         </div>
+                        <br />
+                        <h3 style="text-align:center;">Envíenos su Consulta</h3>
+                        <br />
+                        <form method="post" enctype="multipart/form-data" asp-action="Contacto" asp-controller="Home">
+                            <div class="row g-3">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="col-md-6">
+                                    <input name="Nombre" type="text" class="form-control border-0 bg-light px-4" placeholder="Nombre" style="height: 55px;" required>
+                                    <span name="Nombre" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <input name="Apellido" type="text" class="form-control border-0 bg-light px-4" placeholder="Apellido" style="height: 55px;" required>
+                                    <span name="Apellido" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <input name="AreaCelular" type="text" class="form-control border-0 bg-light px-4" placeholder="Area Celular" style="height: 55px;" required>
+                                    <span name="AreaCelular" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <input name="TeléfonoCelular" type="text" class="form-control border-0 bg-light px-4" placeholder="Celular" style="height: 55px;" required>
+                                    <span name="TeléfonoCelular" class="text-danger"></span>
+                                </div>
+                                <div class="col-12">
+                                    <input name="Email" type="email" class="form-control border-0 bg-light px-4" placeholder="Email" style="height: 55px;" required>
+                                    <span name="Email" class="text-danger"></span>
+                                </div>
+                                <div class="col-12" style="display:none;">
+                                    <input name="SubArea" value="@Model.Nombre" class="form-control border-0 bg-light px-4">
+                                </div>
+                                <div class="col-12">
+                                    <textarea name="Mensaje" class="form-control border-0 bg-light px-4 py-3" rows="4" placeholder="Mensaje" required></textarea>
+                                    <span name="Mensaje" class="text-danger"></span>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100 py-3" type="submit">Enviar Mensaje</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
