@@ -9,19 +9,23 @@ using WebSiteStartNet2023.Models;
 using System.Web;
 using System.Net.Mail;
 using System.Net;
+using AspNetCore.ReCaptcha;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WebSiteStartNet2023.Controllers
 {
+    
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext _context;
-
         private readonly ILogger<HomeController> _logger;
+        private readonly GoogleCaptchaService _captchaService;
 
-        public HomeController(ILogger<HomeController> logger,ApplicationDbContext context)
+        public HomeController(ILogger<HomeController> logger,ApplicationDbContext context,GoogleCaptchaService captchaService)
         {
             _logger = logger;
             _context = context;
+            _captchaService = captchaService;
         }
 
         public IActionResult Index()
@@ -78,8 +82,16 @@ namespace WebSiteStartNet2023.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Contacto([Bind("Id,Nombre,Apellido,AreaCelular,TeléfonoCelular,Email,Mensaje,Fecha,Area,SubArea")]Contacto contacto)
+        public async Task<ActionResult> Contacto([Bind("Id,Nombre,Apellido,AreaCelular,TeléfonoCelular,Email,Mensaje,Fecha,Area,SubArea,Token")]Contacto contacto)
         {
+            //Verificar Respuesta de Token de Google
+            var capthaResult = await _captchaService.VerifyToken(contacto.Token);
+            if (!capthaResult)
+            {
+                return RedirectToAction(nameof(Contacto));
+            }
+
+
             contacto.Fecha = DateTime.Now;
 
             if (ModelState.IsValid)
@@ -113,7 +125,7 @@ namespace WebSiteStartNet2023.Controllers
                 return RedirectToAction(nameof(Contacto));
             }
 
-            return View();
+            return RedirectToAction(nameof(Contacto));
         }
 
         public IActionResult Empresa()
@@ -128,8 +140,15 @@ namespace WebSiteStartNet2023.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CV([Bind("Id,Nombre,Apellido,Localidad,Provincia,CodigoArea,TeléfonoCelular,Email,NombreArchivo,Archivo,Fecha")]CV cv)
+        public async Task<IActionResult> CV([Bind("Id,Nombre,Apellido,Localidad,Provincia,CodigoArea,TeléfonoCelular,Email,NombreArchivo,Archivo,Fecha,Token")]CV cv)
         {
+            //Verificar Respuesta de Token de Google
+            var capthaResult = await _captchaService.VerifyToken(cv.Token);
+            if (!capthaResult)
+            {
+                return RedirectToAction(nameof(CV));
+            }
+
             cv.Fecha = DateTime.Now;
 
             if (cv.Archivo != null)

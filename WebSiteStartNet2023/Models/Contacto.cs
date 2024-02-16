@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 
@@ -35,5 +36,8 @@ namespace WebSiteStartNet2023.Models
         public string? Area { get; set;}
 
         public string? SubArea { get; set; }
+
+        [NotMapped]
+        public string? Token { get; set; }
     }
 }

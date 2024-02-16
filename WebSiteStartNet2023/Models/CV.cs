@@ -39,5 +39,8 @@ namespace WebSiteStartNet2023.Models
         [Required]
         [DataType(DataType.DateTime)]
         public DateTime Fecha { get; set; }
+
+        [NotMapped]
+        public string? Token { get; set; }
     }
 }

@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebSiteStartNet2023.Data;
 using Microsoft.Extensions.FileProviders;
+using AspNetCore.ReCaptcha;
+using WebSiteStartNet2023.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,9 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.Configure<GoogleCaptchaConfig>(builder.Configuration.GetSection("GoogleReCaptcha"));
+builder.Services.AddTransient(typeof(GoogleCaptchaService));
 
 var app = builder.Build();
 

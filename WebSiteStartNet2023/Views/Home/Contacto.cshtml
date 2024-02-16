@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = "Contacto";
 }
+@using Microsoft.Extensions.Options
+@inject IOptions<GoogleCaptchaConfig> GoogleCaptchaConfig
 
 <div class="container-fluid position-relative p-0">
 
@@ -72,27 +74,29 @@
         </div>
         <div class="row g-5">
             <div class="col-lg-6 wow slideInUp" data-wow-delay="0.3s">
-                <form asp-action="Contacto">
+                <form asp-action="Contacto" asp-controller="Home" method="post">
+                    <p style="color:red;">Los campos con (*) son Obligatorios</p>
                     <div class="row g-3">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" id="TokenContacto" asp-for="Token" />
                         <div class="col-md-6">
-                            <input asp-for="Nombre" type="text" class="form-control border-0 bg-light px-4" placeholder="Nombre" style="height: 55px;" required>
+                            <input asp-for="Nombre" type="text" class="form-control border-0 bg-light px-4" placeholder="Nombre(*)" style="height: 55px;" required>
                             <span asp-validation-for="Nombre" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
-                            <input asp-for="Apellido" type="text" class="form-control border-0 bg-light px-4" placeholder="Apellido" style="height: 55px;" required>
+                            <input asp-for="Apellido" type="text" class="form-control border-0 bg-light px-4" placeholder="Apellido(*)" style="height: 55px;" required>
                             <span asp-validation-for="Apellido" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
-                            <input asp-for="AreaCelular" type="text" class="form-control border-0 bg-light px-4" placeholder="Area Celular" style="height: 55px;" required>
+                            <input asp-for="AreaCelular" type="text" class="form-control border-0 bg-light px-4" placeholder="Area Celular(*)" style="height: 55px;" required>
                             <span asp-validation-for="AreaCelular" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
-                            <input asp-for="TeléfonoCelular" type="text" class="form-control border-0 bg-light px-4" placeholder="Celular" style="height: 55px;" required>
+                            <input asp-for="TeléfonoCelular" type="text" class="form-control border-0 bg-light px-4" placeholder="Celular(*)" style="height: 55px;" required>
                             <span asp-validation-for="TeléfonoCelular" class="text-danger"></span>
                         </div>
                         <div class="col-12">
-                            <input asp-for="Email" type="email" class="form-control border-0 bg-light px-4" placeholder="Email" style="height: 55px;" required>
+                            <input asp-for="Email" type="email" class="form-control border-0 bg-light px-4" placeholder="Email(*)" style="height: 55px;" required>
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
@@ -116,11 +120,13 @@
                             <span asp-validation-for="Area" class="text-danger"></span>
                         </div>
                         <div class="col-12">
-                            <textarea asp-for="Mensaje" class="form-control border-0 bg-light px-4 py-3" rows="4" placeholder="Mensaje" required></textarea>
+                            <textarea asp-for="Mensaje" class="form-control border-0 bg-light px-4 py-3" rows="4" placeholder="Mensaje(*)" required></textarea>
                             <span asp-validation-for="Mensaje" class="text-danger"></span>
                         </div>
                         <div class="col-12">
-                            <button class="btn btn-primary w-100 py-3" type="submit">Enviar Mensaje</button>
+                            <button class="btn btn-primary w-100 py-3" type="submit">
+                                Enviar Mensaje
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -133,3 +139,14 @@
     </div>
 </div>
 <!-- Contact End -->
+<script src="https://www.google.com/recaptcha/api.js?render=@GoogleCaptchaConfig.Value.SiteKey"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@GoogleCaptchaConfig.Value.SiteKey', { action: 'submit' }).then(function (token) {
+                // Add your logic to submit to your backend server here.
+                document.getElementById("TokenContacto").value = token;
+            });
+        });
+    });
+</script>

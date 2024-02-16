@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <title>Grupo StartNet</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
 
     <!-- Favicon -->
     <link href="~/Data/img/favicon.ico" rel="icon">
@@ -32,7 +32,6 @@
 </head>
 
 <body>
-    <!-- Spinner Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner"></div>
     </div>
@@ -85,7 +84,7 @@
                     </div>
                     <a asp-controller="Clientes" asp-action="Index" class="nav-item nav-link">Clientes</a>
                     <a asp-controller="Novedades" asp-action="Index" class="nav-item nav-link">Blog</a>
-                    <a asp-controller="Home" asp-action="CV" class="nav-item nav-link">Currículum</a>
+                    <a asp-controller="Home" asp-action="CV" class="nav-item nav-link"><p>Envía&nbsp;tu&nbsp;CV</p></a>
                     <a asp-controller="Home" asp-action="Contacto" class="nav-item nav-link">Contacto</a>
                 </div>
             </div>
@@ -164,10 +163,10 @@
                             </div>
                             <div class="link-animated d-flex flex-column justify-content-start">
                                 <a class="text-light mb-2" asp-controller="Home" asp-action="Index"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
-                                <a class="text-light mb-2" href=""><i class="bi bi-arrow-right text-primary me-2"></i>Productos</a>
-                                <a class="text-light mb-2" href=""><i class="bi bi-arrow-right text-primary me-2"></i>Servicios</a>
+                                <a class="text-light mb-2" asp-controller="Home" asp-action="Empresa"><i class="bi bi-arrow-right text-primary me-2"></i>Empresa</a>
                                 <a class="text-light mb-2" asp-controller="Clientes" asp-action="Index"><i class="bi bi-arrow-right text-primary me-2"></i>Clientes</a>
                                 <a class="text-light mb-2" asp-controller="Novedades" asp-action="Index"><i class="bi bi-arrow-right text-primary me-2"></i>Blog</a>
+                                <a class="text-light mb-2" asp-controller="Home" asp-action="CV" ><i class="bi bi-arrow-right text-primary me-2"></i>CV</a>
                                 <a class="text-light" asp-controller="Home" asp-action="Contacto"><i class="bi bi-arrow-right text-primary me-2"></i>Contacto</a>
                             </div>
                         </div>
