@@ -1,4 +1,105 @@
-﻿<!-- Navbar & Carousel Start -->
+﻿<style>
+    /* Bloquear scroll del fondo */
+    body.modal-abierto,
+    html.modal-abierto {
+        overflow: hidden;
+        height: 100%;
+        position: fixed;
+        width: 100%;
+    }
+
+    /* Fondo oscuro */
+    .overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 9998;
+    }
+
+    /* Modal centrado */
+    .modal-contenedor {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        max-width: 95vw;
+        max-height: 95vh;
+        padding: 0;
+        background: transparent;
+    }
+
+    /* Imagen adaptativa */
+    .modal-imagen {
+        width: 100%;
+        height: auto;
+        max-height: 95vh;
+        object-fit: contain;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(255,255,255,0.8);
+    }
+
+    /* Botón cerrar (cruz) */
+    .cerrar-x {
+        position: absolute;
+        top: -16px;
+        right: -16px;
+        background: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Ajustes móviles */
+    @@media (max-width: 768px) {
+        .modal-contenedor {
+            width: calc(100vw - 20px);
+            max-width: 100vw;
+            max-height: 100vh;
+        }
+
+        .modal-imagen {
+            width: 100%;
+            height: auto;
+            max-height: calc(100vh - 40px);
+            border-radius: 0;
+        }
+
+        .cerrar-x {
+            top: 12px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            font-size: 1.4rem;
+        }
+    }
+
+</style>
+
+<!-- Fondo oscuro -->
+<div class="overlay" onclick="cerrarModal()"></div>
+
+<!-- Modal centrado -->
+<div class="modal-contenedor" onclick="event.stopPropagation()">
+    <button class="cerrar-x" onclick="cerrarModal()">✕</button>
+    <a target="_blank" href="https://stnt.atlassian.net/servicedesk/customer/portal/1/group/1/create/4">
+        <img src="~/Data/Imagenes/SOPORTE-STNT.png" alt="Promo" class="modal-imagen" />
+    </a>
+</div>
+
+<!-- Navbar & Carousel Start -->
 <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
     <div class="carousel-inner">
         @foreach (var item in ViewBag.Sliders)
@@ -262,3 +363,22 @@
     </div>
 </div>
 <!-- Clientes End -->
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function cerrarModal() {
+        document.querySelector('.overlay').style.display = 'none';
+        document.querySelector('.modal-contenedor').style.display = 'none';
+        document.body.classList.remove('modal-abierto');
+        document.documentElement.classList.remove('modal-abierto');
+    }
+
+    function abrirModal() {
+        document.querySelector('.overlay').style.display = 'block';
+        document.querySelector('.modal-contenedor').style.display = 'flex';
+        document.body.classList.add('modal-abierto');
+        document.documentElement.classList.add('modal-abierto');
+    }
+</script>

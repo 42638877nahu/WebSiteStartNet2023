@@ -85,6 +85,7 @@
                     <a asp-controller="Clientes" asp-action="Index" class="nav-item nav-link">Clientes</a>
                     <a asp-controller="Novedades" asp-action="Index" class="nav-item nav-link">Blog</a>
                     <a asp-controller="Home" asp-action="CV" class="nav-item nav-link"><p>Envía&nbsp;tu&nbsp;CV</p></a>
+                    <a target="_blank" href="https://stnt.atlassian.net/servicedesk/customer/portal/1/group/1/create/4" class="nav-item nav-link">Soporte</a>
                     <a asp-controller="Home" asp-action="Contacto" class="nav-item nav-link">Contacto</a>
                 </div>
             </div>
@@ -118,10 +119,10 @@
                                 <i class="bi bi-geo-alt text-primary me-2"></i>
                                 <p class="mb-0">Pje.Zanicheli 1887 3°A,San Francisco,Cordoba</p>
                             </div>
-                            <div class="d-flex mb-2">
+                            @* <div class="d-flex mb-2">
                                 <i class="bi bi-telephone text-primary me-2"></i>
                                 <p class="mb-0">3564 437465</p>
-                            </div>
+                            </div> *@
                             <div class="d-flex mt-4">
                                 @*<a class="btn btn-primary btn-square me-2" href="https://twitter.com/stnt_ingenieria"><i class="fab fa-twitter fw-normal"></i></a>*@
                                 <a class="btn btn-primary btn-square me-2" target="_blank" href="https://www.facebook.com/people/StartNet-Ingenier%C3%ADa-en-Desarrollos-Inform%C3%A1ticos/100034650236906/"><i class="fab fa-facebook-f fw-normal"></i></a>
@@ -167,6 +168,7 @@
                                 <a class="text-light mb-2" asp-controller="Clientes" asp-action="Index"><i class="bi bi-arrow-right text-primary me-2"></i>Clientes</a>
                                 <a class="text-light mb-2" asp-controller="Novedades" asp-action="Index"><i class="bi bi-arrow-right text-primary me-2"></i>Blog</a>
                                 <a class="text-light mb-2" asp-controller="Home" asp-action="CV" ><i class="bi bi-arrow-right text-primary me-2"></i>CV</a>
+                                <a class="text-light mb-2" target="_blank" href="https://stnt.atlassian.net/servicedesk/customer/portal/1/group/1/create/4"><i class="bi bi-arrow-right text-primary me-2"></i>Soporte y Ayuda</a>
                                 <a class="text-light" asp-controller="Home" asp-action="Contacto"><i class="bi bi-arrow-right text-primary me-2"></i>Contacto</a>
                             </div>
                         </div>
