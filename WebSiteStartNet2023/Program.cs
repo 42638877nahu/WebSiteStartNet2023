@@ -46,13 +46,6 @@ app.UseStaticFiles(new StaticFileOptions()
     RequestPath = "/Data"
 });
 
-app.UseStaticFiles(new StaticFileOptions()
-{
-    FileProvider = new PhysicalFileProvider(
-           Path.Combine(builder.Environment.ContentRootPath, "expire")),
-    RequestPath = "/expire"
-});
-
 app.UseDeveloperExceptionPage();
 
 app.UseRouting();
