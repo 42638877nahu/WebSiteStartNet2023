@@ -27,6 +27,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseMigrationsEndPoint();
 }
 else
@@ -45,8 +46,6 @@ app.UseStaticFiles(new StaticFileOptions()
            Path.Combine(builder.Environment.ContentRootPath, "Data")),
     RequestPath = "/Data"
 });
-
-app.UseDeveloperExceptionPage();
 
 app.UseRouting();
 
