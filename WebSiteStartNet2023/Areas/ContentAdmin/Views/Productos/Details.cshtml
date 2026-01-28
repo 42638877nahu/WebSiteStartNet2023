@@ -1,0 +1,54 @@
+﻿@model WebSiteStartNet2023.Models.Producto
+
+@{
+    ViewData["Title"] = "Detalle Producto";
+}
+
+<h1>Detalle Producto</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Fecha)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayName("Foto Slider")
+        </dt>
+        <dd class = "col-sm-10">
+            <img width="150em" height="auto" class="img-fluid" src="~/Data/Imagenes/Productos/@Model.NombreSlider">
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayName("Foto Home")
+        </dt>
+        <dd class="col-sm-10">
+            <img width="150em" height="auto" class="img-fluid" src="~/Data/Imagenes/Productos/@Model.NombreHome">
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Detalle)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.Raw(Model.Detalle)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Editar</a> |
+    <a asp-action="Index">Volver</a>
+</div>
+<hr />

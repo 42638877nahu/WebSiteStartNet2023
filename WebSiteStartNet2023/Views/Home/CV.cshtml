@@ -1,0 +1,101 @@
+﻿@model WebSiteStartNet2023.Models.CV
+
+@{
+    ViewData["Title"] = "Envía tu CV";
+}
+@using Microsoft.Extensions.Options
+@inject IOptions<GoogleCaptchaConfig> GoogleCaptchaConfig
+
+<div class="container-fluid position-relative p-0">
+
+    <div class="container-fluid bg-primary py-5 bg-header">
+        <div class="row py-5">
+            <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                <h1 class="display-4 text-white animated zoomIn">Currículum</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+
+<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-12">
+                <div class="row g-5">
+
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <form asp-action="CV" enctype="multipart/form-data">
+                                <p style="color:red;">Los campos con (*) son Obligatorios</p>
+                                <div class="row g-3">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <input type="hidden" id="TokenContacto" asp-for="Token" />
+                                    <div class="col-md-6">
+                                        <input asp-for="Nombre" class="form-control border-0 bg-light px-4" placeholder="Nombre(*)" required="true" />
+                                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input asp-for="Apellido" class="form-control border-0 bg-light px-4" placeholder="Apellido(*)" required="true" />
+                                        <span asp-validation-for="Apellido" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input asp-for="Localidad" class="form-control border-0 bg-light px-4" placeholder="Localidad(*)" required="true" />
+                                        <span asp-validation-for="Localidad" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input asp-for="Provincia" class="form-control border-0 bg-light px-4" placeholder="Provincia(*)" required="true" />
+                                        <span asp-validation-for="Provincia" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input asp-for="CodigoArea" class="form-control border-0 bg-light px-4" placeholder="Codigo Area(*)" required="true" />
+                                        <span asp-validation-for="CodigoArea" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input asp-for="TeléfonoCelular" class="form-control border-0 bg-light px-4" placeholder="Celular(*)" required="true" />
+                                        <span asp-validation-for="TeléfonoCelular" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input asp-for="Email" class="form-control border-0 bg-light px-4" placeholder="Email(*)" required="true" />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6" style="display:none;">
+                                        <input asp-for="NombreArchivo" class="form-control border-0 bg-light px-4" value="Vacio" />
+                                        <span asp-validation-for="NombreArchivo" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input asp-for="Archivo" accept=".pdf" class="form-control" required="true" placeholder="Seleccione un archivo en formato PDF." />
+                                        <span asp-validation-for="Archivo" class="text-danger"></span>
+                                    </div>
+                                    <br />
+                                    <div class="form-group">
+                                        <input class="btn btn-primary" type="submit" value="Enviar"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://www.google.com/recaptcha/api.js?render=@GoogleCaptchaConfig.Value.SiteKey"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@GoogleCaptchaConfig.Value.SiteKey', { action: 'submit' }).then(function (token) {
+                // Add your logic to submit to your backend server here.
+                document.getElementById("TokenContacto").value = token;
+            });
+        });
+    });
+</script>
+
+
+

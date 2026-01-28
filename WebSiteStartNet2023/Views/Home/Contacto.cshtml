@@ -1,0 +1,152 @@
+﻿@model WebSiteStartNet2023.Models.Contacto
+@{
+    ViewData["Title"] = "Contacto";
+}
+@using Microsoft.Extensions.Options
+@inject IOptions<GoogleCaptchaConfig> GoogleCaptchaConfig
+
+<div class="container-fluid position-relative p-0">
+
+    <div class="container-fluid bg-primary py-5 bg-header">
+        <div class="row py-5">
+            <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                <h1 class="display-4 text-white animated zoomIn">Contacto</h1>
+                @*<a href="" class="h5 text-white">Home</a>
+                <i class="far fa-circle text-white px-2"></i>
+                <a href="" class="h5 text-white">Contact</a>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Contact Start -->
+<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+            <h5 class="fw-bold text-primary text-uppercase">Contacto</h5>
+            <h1 class="mb-0">Si tiene alguna consulta, no dude en contactarnos</h1>
+        </div>
+        <div class="row g-5 mb-5">
+            @* <div class="col-lg-4">
+                <div class="d-flex align-items-center wow fadeIn" data-wow-delay="0.1s">
+                    <div class="bg-primary d-flex align-items-center justify-content-center rounded" style="width: 60px; height: 60px;">
+                        <i class="fa fa-phone-alt text-white"></i>
+                    </div>
+                    <div class="ps-4">
+                        <h5 class="mb-2">Teléfono:</h5>
+                        <h4 class="text-primary mb-0">3564 437465</h4>
+                    </div>
+                </div>
+            </div> *@
+@*            <div class="col-lg-4">
+                <div class="d-flex align-items-center wow fadeIn" data-wow-delay="0.4s">
+                    <div class="bg-primary d-flex align-items-center justify-content-center rounded" style="width: 60px; height: 60px;">
+                        <i class="fa fa-envelope-open text-white"></i>
+                    </div>
+                    <div class="ps-4">
+                        <h5 class="mb-2">Email:</h5>
+                        <h4 class="text-primary mb-0">ingenieria@stnt.com.ar</h4>
+                    </div>
+                </div>
+            </div>*@
+            <div class="col-lg-4">
+                <div class="d-flex align-items-center wow fadeIn" data-wow-delay="0.4s">
+                    <div class="bg-primary d-flex align-items-center justify-content-center rounded" style="width: 60px; height: 60px;">
+                        <i class="fa fa-envelope-open text-white"></i>
+                    </div>
+                    <div class="ps-4">
+                        <h5 class="mb-2">Email:</h5>
+                        <h4 class="text-primary mb-0">comercial@stnt.com.ar</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="d-flex align-items-center wow fadeIn" data-wow-delay="0.8s">
+                    <div class="bg-primary d-flex align-items-center justify-content-center rounded" style="width: 60px; height: 60px;">
+                        <i class="fa fa-map-marker-alt text-white"></i>
+                    </div>
+                    <div class="ps-4">
+                        <h5 class="mb-2">Ubicación:</h5>
+                        <h4 class="text-primary mb-0">Pje.Zanicheli 1887 3°A,San Francisco,Cordoba</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-5">
+            <div class="col-lg-6 wow slideInUp" data-wow-delay="0.3s">
+                <form asp-action="Contacto" asp-controller="Home" method="post">
+                    <p style="color:red;">Los campos con (*) son Obligatorios</p>
+                    <div class="row g-3">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" id="TokenContacto" asp-for="Token" />
+                        <div class="col-md-6">
+                            <input asp-for="Nombre" type="text" class="form-control border-0 bg-light px-4" placeholder="Nombre(*)" style="height: 55px;" required>
+                            <span asp-validation-for="Nombre" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <input asp-for="Apellido" type="text" class="form-control border-0 bg-light px-4" placeholder="Apellido(*)" style="height: 55px;" required>
+                            <span asp-validation-for="Apellido" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <input asp-for="AreaCelular" type="text" class="form-control border-0 bg-light px-4" placeholder="Area Celular(*)" style="height: 55px;" required>
+                            <span asp-validation-for="AreaCelular" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <input asp-for="TeléfonoCelular" type="text" class="form-control border-0 bg-light px-4" placeholder="Celular(*)" style="height: 55px;" required>
+                            <span asp-validation-for="TeléfonoCelular" class="text-danger"></span>
+                        </div>
+                        <div class="col-12">
+                            <input asp-for="Email" type="email" class="form-control border-0 bg-light px-4" placeholder="Email(*)" style="height: 55px;" required>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <select asp-for="SubArea" class="form-control border-0 bg-light px-4" style="height: 55px;" >
+                                <option>Elija un Servicio...</option>
+                                @foreach (var item in ViewBag.Servicios)
+                                {
+                                    <option value="@item.Nombre">@item.Nombre</option>
+                                }
+                            </select>
+                            <span asp-validation-for="SubArea" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <select asp-for="Area" class="form-control border-0 bg-light px-4" style="height: 55px;">
+                                <option>Elija un Producto...</option>
+                                @foreach (var item in ViewBag.Productos)
+                                {
+                                    <option value="@item.Nombre">@item.Nombre</option>
+                                }
+                            </select>
+                            <span asp-validation-for="Area" class="text-danger"></span>
+                        </div>
+                        <div class="col-12">
+                            <textarea asp-for="Mensaje" class="form-control border-0 bg-light px-4 py-3" rows="4" placeholder="Mensaje(*)" required></textarea>
+                            <span asp-validation-for="Mensaje" class="text-danger"></span>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary w-100 py-3" type="submit">
+                                Enviar Mensaje
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3404.4353642448546!2d-62.08692679999999!3d-31.4296793!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95cb28177ddec34f%3A0x4571cfeb497f7b1a!2sPje.%20Gdor.%20Arturo%20Zanichelli%201887%2C%20X2400%20San%20Francisco%2C%20C%C3%B3rdoba!5e0!3m2!1ses-419!2sar!4v1705414548462!5m2!1ses-419!2sar" 
+                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Contact End -->
+<script src="https://www.google.com/recaptcha/api.js?render=@GoogleCaptchaConfig.Value.SiteKey"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@GoogleCaptchaConfig.Value.SiteKey', { action: 'submit' }).then(function (token) {
+                // Add your logic to submit to your backend server here.
+                document.getElementById("TokenContacto").value = token;
+            });
+        });
+    });
+</script>

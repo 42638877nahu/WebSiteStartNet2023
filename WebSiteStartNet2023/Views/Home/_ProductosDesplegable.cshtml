@@ -1,0 +1,10 @@
+﻿@model IEnumerable<WebSiteStartNet2023.Models.Producto>
+@{
+    Layout = null;
+}
+@{
+    foreach (var item in Model)
+    {
+        <a href="blog.html" class="dropdown-item">@item.Nombre</a>
+    }
+}
