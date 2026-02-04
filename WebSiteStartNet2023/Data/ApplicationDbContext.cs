@@ -35,5 +35,8 @@ namespace WebSiteStartNet2023.Data
 
         public DbSet<ExperienciaTrabajo> ExperienciasTrabajo { get; set; }
         public DbSet<PuestoTrabajoPostulante> PuestosTrabajoPostulantes { get; set; }
+        public DbSet<WebSiteStartNet2023.Models.NivelOral>? NivelOral { get; set; }
+        public DbSet<WebSiteStartNet2023.Models.NivelEscrito>? NivelEscrito { get; set; }
+        public DbSet<WebSiteStartNet2023.Models.NivelLectura>? NivelLectura { get; set; }
     }
 }
