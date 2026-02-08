@@ -58,12 +58,12 @@ namespace WebSiteStartNet2023.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre")] Provincia provincia)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(provincia);
+            //if (ModelState.IsValid)
+            //{
+                _context.Provincias.Add(provincia);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
+            //}
             return View(provincia);
         }
 

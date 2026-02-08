@@ -10,23 +10,23 @@ using WebSiteStartNet2023.Models;
 
 namespace WebSiteStartNet2023.Controllers
 {
-    public class LocalidadsController : Controller
+    public class LocalidadesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public LocalidadsController(ApplicationDbContext context)
+        public LocalidadesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Localidads
+        // GET: Localidades
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Localidades.Include(l => l.Provincia);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Localidads/Details/5
+        // GET: Localidades/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Localidades == null)
@@ -45,31 +45,31 @@ namespace WebSiteStartNet2023.Controllers
             return View(localidad);
         }
 
-        // GET: Localidads/Create
+        // GET: Localidades/Create
         public IActionResult Create()
         {
-            ViewData["ProvinciaId"] = new SelectList(_context.Provincias, "Id", "Id");
+            ViewData["ProvinciaId"] = new SelectList(_context.Provincias, "Id", "Nombre");
             return View();
         }
 
-        // POST: Localidads/Create
+        // POST: Localidades/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,CodigoPostal,ProvinciaId")] Localidad localidad)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(localidad);
+            //if (ModelState.IsValid)
+            //{
+                _context.Localidades.Add(localidad);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["ProvinciaId"] = new SelectList(_context.Provincias, "Id", "Id", localidad.ProvinciaId);
+            //}
+            ViewData["ProvinciaId"] = new SelectList(_context.Provincias, "Id", "Nombre", localidad.ProvinciaId);
             return View(localidad);
         }
 
-        // GET: Localidads/Edit/5
+        // GET: Localidades/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Localidades == null)
@@ -82,11 +82,11 @@ namespace WebSiteStartNet2023.Controllers
             {
                 return NotFound();
             }
-            ViewData["ProvinciaId"] = new SelectList(_context.Provincias, "Id", "Id", localidad.ProvinciaId);
+            ViewData["ProvinciaId"] = new SelectList(_context.Provincias, "Id", "Nombre", localidad.ProvinciaId);
             return View(localidad);
         }
 
-        // POST: Localidads/Edit/5
+        // POST: Localidades/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -118,11 +118,11 @@ namespace WebSiteStartNet2023.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProvinciaId"] = new SelectList(_context.Provincias, "Id", "Id", localidad.ProvinciaId);
+            ViewData["ProvinciaId"] = new SelectList(_context.Provincias, "Id", "Nombre", localidad.ProvinciaId);
             return View(localidad);
         }
 
-        // GET: Localidads/Delete/5
+        // GET: Localidades/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Localidades == null)
@@ -141,7 +141,7 @@ namespace WebSiteStartNet2023.Controllers
             return View(localidad);
         }
 
-        // POST: Localidads/Delete/5
+        // POST: Localidades/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

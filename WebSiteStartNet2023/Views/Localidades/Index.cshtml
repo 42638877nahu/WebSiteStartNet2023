@@ -1,13 +1,21 @@
 ﻿@model IEnumerable<WebSiteStartNet2023.Models.Localidad>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de localidades";
 }
 
-<h1>Index</h1>
+<div class="container-fluid position-relative p-0">
+    <div class="container-fluid bg-primary py-5 bg-header">
+        <div class="row py-5">
+            <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                <h1 class="display-4 text-white animated zoomIn">Lista de localidades</h1>
+            </div>
+        </div>
+    </div>
+</div>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Crear localidad</a>
 </p>
 <table class="table">
     <thead>
@@ -34,12 +42,12 @@
                 @Html.DisplayFor(modelItem => item.CodigoPostal)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Provincia.Id)
+                @Html.DisplayFor(modelItem => item.Provincia.Nombre)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalle</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
             </td>
         </tr>
 }

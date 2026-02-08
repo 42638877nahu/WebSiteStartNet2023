@@ -3,6 +3,7 @@
     public class TecnologiaPostulante
     {
         public int Id { get; set; }
+        public string Descripcion { get; set; }
 
         public int PostulanteId { get; set; }
         public Postulante Postulante { get; set; }

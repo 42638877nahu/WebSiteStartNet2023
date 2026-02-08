@@ -88,6 +88,16 @@
                     <a target="_blank" href="https://stnt.atlassian.net/servicedesk/customer/portal/1/group/1/create/4" class="nav-item nav-link">Soporte</a>
                     <a asp-controller="Home" asp-action="Contacto" class="nav-item nav-link">Contacto</a>
                     <a asp-controller="Postulantes" asp-action="Index" class="nav-item nav-link">Postulantes</a>
+                    
+                    <div class="dropdown">
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Operaciones</a>
+                            <ul class="dropdown-menu m-0">
+                                <a asp-controller="Provincias" asp-action="Index" class="dropdown-item">Provincias</a>    
+                                <a asp-controller="Localidades" asp-action="Index" class="dropdown-item">Localidades</a>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
