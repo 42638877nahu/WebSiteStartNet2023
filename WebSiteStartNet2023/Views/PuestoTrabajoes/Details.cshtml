@@ -4,8 +4,15 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
+<div class="container-fluid position-relative p-0">
+    <div class="container-fluid bg-primary py-5 bg-header">
+        <div class="row py-5">
+            <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                <h1 class="display-4 text-white animated zoomIn">Detalle</h1>
+            </div>
+        </div>
+    </div>
+</div>
 <div>
     <h4>PuestoTrabajo</h4>
     <hr />
@@ -19,6 +26,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Editar</a> |
+    <a asp-action="Index">Volver</a>
 </div>
