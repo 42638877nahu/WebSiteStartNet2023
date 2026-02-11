@@ -164,5 +164,17 @@ namespace WebSiteStartNet2023.Controllers
         {
           return (_context.Localidades?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+        #region obtener Localidades por provincias (ajax)
+
+        [HttpGet]
+        public IActionResult GetLocalidades(int ProvinciaId)
+        {
+
+            var Localidades = _context.Localidades.Where(x => x.ProvinciaId == ProvinciaId).ToList();
+            return Json(Localidades);
+        }
+
+        #endregion
+
     }
 }

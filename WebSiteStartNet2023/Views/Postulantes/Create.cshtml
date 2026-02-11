@@ -1,14 +1,14 @@
 ﻿@model WebSiteStartNet2023.Models.Postulante
 
 @{
-    ViewData["Title"] = "Postulantes";
+    ViewData["Title"] = "Nuevo Postulantes";
 }
 
 <div class="container-fluid position-relative p-0">
     <div class="container-fluid bg-primary py-5 bg-header">
         <div class="row py-5">
             <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                <h1 class="display-4 text-white animated zoomIn">Postulantes</h1>
+                <h1 class="display-4 text-white animated zoomIn"> Nuevo Postulante</h1>
             </div>
         </div>
     </div>
@@ -51,7 +51,7 @@
 
                 <div class="form-group">
                     <label asp-for="FechaNacimiento" class="control-label"></label>
-                    <input asp-for="FechaNacimiento" class="form-control" />
+                    <input asp-for="FechaNacimiento" type="date" class="form-control" />
                     <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
                 </div>
          </div>
@@ -62,16 +62,25 @@
         <div class="col-3">
 
             <!--Usar view model-->
-            @* <div class="form-group">
-                <label asp-for="ProvinciaId" class="control-label"></label>
-                <select asp-for="ProvinciaId" class="form-control" asp-items="ViewBag.ProvinciaId"></select>
-            </div> *@
+            <div class="form-group">
+                <label  class="control-label">Provincia</label>
+                <select id="provinciaSelect" class="form-control">
+                    <option value="">Selecione una provincia</option>
+                    @foreach (var Prov in ViewBag.Provincias)
+                        {
+                            <option value="@Prov.Id">@Prov.Nombre</option>
+
+                        }
+                </select>
+            </div>
         </div>
         <div class="col-3">
 
             <div class="form-group">
                 <label asp-for="LocalidadId" class="control-label"></label>
-                <select asp-for="LocalidadId" class="form-control" asp-items="ViewBag.LocalidadId"></select>
+                <select id="localidadSelect" asp-for="LocalidadId" class="form-control" >
+                    <option value="">Selecione una localidad</option>
+                </select>
             </div>
         </div>
         <div class="col-3">
@@ -146,21 +155,46 @@
         <input asp-for="ArchivoCV" class="form-control" />
         <span asp-validation-for="ArchivoCV" class="text-danger"></span>
     </div>
+    
     <div class="form-group">
-        <label asp-for="FechaAlta" class="control-label"></label>
-        <input asp-for="FechaAlta" class="form-control" />
-        <span asp-validation-for="FechaAlta" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Create" class="btn btn-primary" />
+        <input type="submit" value="Crear" class="btn btn-primary" />
     </div>
 </form>
 
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Volver</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $("#provinciaSelect").change(function () {
+
+        var provinciaId = $(this).val();
+
+        $("#localidadSelect").empty();
+        $("#localidadSelect").append('<option value="">Cargando...</option>');
+
+        $.ajax({
+            url: '/Localidades/GetLocalidades',
+            type: 'GET',
+            data: { ProvinciaId: provinciaId },
+            success: function (data) {
+
+                $("#localidadSelect").empty();
+                $("#localidadSelect").append('<option value="">Seleccione localidad</option>');
+
+                $.each(data, function (i, loc) {
+                    $("#localidadSelect").append('<option value="' + loc.id + '">' + loc.nombre + '</option>');
+                });
+            },
+            error: function () {
+                alert("Error al cargar localidades.");
+            }
+        });
+    });
+</script>

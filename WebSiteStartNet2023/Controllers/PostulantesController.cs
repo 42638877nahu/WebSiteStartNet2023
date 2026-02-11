@@ -24,6 +24,7 @@ namespace WebSiteStartNet2023.Controllers
         {
             var applicationDbContext = _context.Postulantes.Include(p => p.Localidad);
             return View(await applicationDbContext.ToListAsync());
+
         }
 
         // GET: Postulantes/Details/5
@@ -49,7 +50,9 @@ namespace WebSiteStartNet2023.Controllers
         public IActionResult Create()
         {
             ViewData["LocalidadId"] = new SelectList(_context.Localidades, "Id", "Id");
+            ViewBag.Provincias = _context.Provincias.ToList();
             return View();
+
         }
 
         // POST: Postulantes/Create
@@ -59,19 +62,23 @@ namespace WebSiteStartNet2023.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,DNI,FechaNacimiento,LocalidadId,CodigoArea,TelefonoCelular,Email,ArchivoCV,FechaAlta")] Postulante postulante)
         {
+            ModelState.Remove(nameof(Postulante.Localidad));
             if (ModelState.IsValid)
             {
+                postulante.FechaAlta = DateTime.Now;
+                postulante.FechaNacimiento = postulante.FechaNacimiento.Date;
                 _context.Add(postulante);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LocalidadId"] = new SelectList(_context.Localidades, "Id", "Id", postulante.LocalidadId);
+            //ViewData["LocalidadId"] = new SelectList(_context.Localidades, "Id", "Id", postulante.LocalidadId);
             return View(postulante);
         }
 
         // GET: Postulantes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.Provincias = _context.Provincias.ToList();
             if (id == null || _context.Postulantes == null)
             {
                 return NotFound();
@@ -97,6 +104,8 @@ namespace WebSiteStartNet2023.Controllers
             {
                 return NotFound();
             }
+
+            ModelState.Remove(nameof(Postulante.Localidad));
 
             if (ModelState.IsValid)
             {

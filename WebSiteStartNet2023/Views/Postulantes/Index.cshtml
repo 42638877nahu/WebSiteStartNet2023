@@ -16,7 +16,7 @@
 
 
 <p class="mt-5 mb-5">
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Nuevo Postulante</a>
 </p>
 <table class="table">
     <thead>
@@ -88,9 +88,9 @@
                 @Html.DisplayFor(modelItem => item.FechaAlta)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">eliminar</a>
             </td>
         </tr>
 }

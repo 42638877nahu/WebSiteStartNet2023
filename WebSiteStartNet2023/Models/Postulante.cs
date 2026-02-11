@@ -34,7 +34,7 @@ namespace WebSiteStartNet2023.Models
 
         [Required]
         public int LocalidadId { get; set; }
-        public Localidad Localidad { get; set; }
+        public Localidad Localidad { get; set; } //quitar
 
         //[Required]
         //public int IdiomaPostulanteId { get; set; }

@@ -1,79 +1,202 @@
 ﻿@model WebSiteStartNet2023.Models.Postulante
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Modificar Postulante";
 }
 
-<h1>Edit</h1>
+<div class="container-fluid position-relative p-0">
+    <div class="container-fluid bg-primary py-5 bg-header">
+        <div class="row py-5">
+            <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                <h1 class="display-4 text-white animated zoomIn"> Modificar Postulante</h1>
+            </div>
+        </div>
+    </div>
+</div>
 
-<h4>Postulante</h4>
+<h4>Trabaja con nosotros Forma parte de grupo StarNet</h4>
+
+<h5>Datos Personales</h5>
+
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="row">
+        <div class="col-3">
+
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
+        </div>
+        <div class="col-3">
+
             <div class="form-group">
                 <label asp-for="Apellido" class="control-label"></label>
                 <input asp-for="Apellido" class="form-control" />
                 <span asp-validation-for="Apellido" class="text-danger"></span>
             </div>
+        </div>
+        <div class="col-3">
+
             <div class="form-group">
                 <label asp-for="DNI" class="control-label"></label>
                 <input asp-for="DNI" class="form-control" />
                 <span asp-validation-for="DNI" class="text-danger"></span>
             </div>
+        </div>
+        <div class="col-3">
+
             <div class="form-group">
                 <label asp-for="FechaNacimiento" class="control-label"></label>
-                <input asp-for="FechaNacimiento" class="form-control" />
+                <input asp-for="FechaNacimiento" type="date" class="form-control" />
                 <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
             </div>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-3">
+
+            <!--Usar view model-->
+            <div class="form-group">
+                <label class="control-label">Provincia</label>
+                <select id="provinciaSelect" class="form-control">
+                    <option value="">Selecione una provincia</option>
+                    @foreach (var Prov in ViewBag.Provincias)
+                    {
+                        <option value="@Prov.Id">@Prov.Nombre</option>
+
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="col-3">
+
             <div class="form-group">
                 <label asp-for="LocalidadId" class="control-label"></label>
-                <select asp-for="LocalidadId" class="form-control" asp-items="ViewBag.LocalidadId"></select>
-                <span asp-validation-for="LocalidadId" class="text-danger"></span>
+                <select id="localidadSelect" asp-for="LocalidadId" class="form-control">
+                    <option value="">Selecione una localidad</option>
+                </select>
             </div>
+        </div>
+        <div class="col-3">
+
             <div class="form-group">
                 <label asp-for="CodigoArea" class="control-label"></label>
                 <input asp-for="CodigoArea" class="form-control" />
                 <span asp-validation-for="CodigoArea" class="text-danger"></span>
             </div>
+        </div>
+        <div class="col-3">
+
             <div class="form-group">
                 <label asp-for="TelefonoCelular" class="control-label"></label>
                 <input asp-for="TelefonoCelular" class="form-control" />
                 <span asp-validation-for="TelefonoCelular" class="text-danger"></span>
             </div>
+        </div>
+        <div class="col-3">
+
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ArchivoCV" class="control-label"></label>
-                <input asp-for="ArchivoCV" class="form-control" />
-                <span asp-validation-for="ArchivoCV" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaAlta" class="control-label"></label>
-                <input asp-for="FechaAlta" class="form-control" />
-                <span asp-validation-for="FechaAlta" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+
+    <h6>Estudios Realizados</h6>
+    <div class="row">
+        <div class="col-3">
+            <!--Usar view model en tecnologia-->
+            @*  <div class="form-group">
+                <label asp-for="NivelConocimientoId" class="control-label"></label>
+                <select asp-for="NivelConocimientoId" class="form-control" asp-items="ViewBag.NivelConocimientoId"></select>
+            </div> *@
+        </div>
+        <div class="col-3">
+
+            @* <div class="form-group">
+                <label asp-for="institucionId" class="control-label"></label>
+                <select asp-for="institucionId" class="form-control" asp-items="ViewBag.institucionId"></select>
+            </div>  *@
+        </div>
+
+    </div>
+
+    <h7>Situacion Laboral Actual</h7>
+
+    @*     <div class="row">
+        <div class="col-3">
+
+            <div class="form-group">
+                <label asp-for="PuestoTrabajoId" class="control-label"></label>
+                <select asp-for="PuestoTrabajoId" class="form-control" asp-items="ViewBag.PuestoTrabajoId"></select>
+            </div>
+        </div>
+    </div>
+    <h8>Experiencias Laborales</h8>
+    <div class="row">   
+        <div class="col-3">
+            <div class="form-group">
+                <label asp-for="PuestoTrabajoId" class="control-label"></label>
+                <select asp-for="PuestoTrabajoId" class="form-control" asp-items="ViewBag.PuestoTrabajoId"></select>
+            </div>
+        </div>
+    </div> *@
+
+
+    <div class="form-group">
+        <label asp-for="ArchivoCV" class="control-label"></label>
+        <input asp-for="ArchivoCV" class="form-control" />
+        <span asp-validation-for="ArchivoCV" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Crear" class="btn btn-primary" />
+    </div>
+</form>
+
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Volver</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $("#provinciaSelect").change(function () {
+
+        var provinciaId = $(this).val();
+
+        $("#localidadSelect").empty();
+        $("#localidadSelect").append('<option value="">Cargando...</option>');
+
+        $.ajax({
+            url: '/Localidades/GetLocalidades',
+            type: 'GET',
+            data: { ProvinciaId: provinciaId },
+            success: function (data) {
+
+                $("#localidadSelect").empty();
+                $("#localidadSelect").append('<option value="">Seleccione localidad</option>');
+
+                $.each(data, function (i, loc) {
+                    $("#localidadSelect").append('<option value="' + loc.id + '">' + loc.nombre + '</option>');
+                });
+            },
+            error: function () {
+                alert("Error al cargar localidades.");
+            }
+        });
+    });
+</script>
