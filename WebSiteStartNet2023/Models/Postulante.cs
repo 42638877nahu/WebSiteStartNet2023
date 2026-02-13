@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebSiteStartNet2023.Models
 {
@@ -27,7 +28,10 @@ namespace WebSiteStartNet2023.Models
         [EmailAddress]
         public string Email { get; set; }
 
-        public string ArchivoCV { get; set; }
+        public string? ArchivoCV { get; set; }
+
+        [NotMapped]
+        public IFormFile? ArchivoCVFile { get; set; }
         public DateTime FechaAlta { get; set; }
 
         //Foreign Keys + relaciones

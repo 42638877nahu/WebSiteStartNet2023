@@ -13,10 +13,12 @@ namespace WebSiteStartNet2023.Controllers
     public class PostulantesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public PostulantesController(ApplicationDbContext context)
+        public PostulantesController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Postulantes
@@ -60,19 +62,45 @@ namespace WebSiteStartNet2023.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,DNI,FechaNacimiento,LocalidadId,CodigoArea,TelefonoCelular,Email,ArchivoCV,FechaAlta")] Postulante postulante)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,DNI,FechaNacimiento,LocalidadId,CodigoArea,TelefonoCelular,Email,ArchivoCV,ArchivoCVFile,FechaAlta")] Postulante postulante)
         {
             ModelState.Remove(nameof(Postulante.Localidad));
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return View(postulante);
+
+            if (postulante.ArchivoCVFile != null && postulante.ArchivoCVFile.Length > 0)
             {
+                string carpetaCV = Path.Combine(_webHostEnvironment.WebRootPath, "CVs");
+                if (!Directory.Exists(carpetaCV))
+                {
+                    Directory.CreateDirectory(carpetaCV);
+                }
+
+                string extension = Path.GetExtension(postulante.ArchivoCVFile.FileName);
+                string fechaHoy = DateTime.Now.ToString("yyyyMMdd");
+                string nombreArchivo = $"{postulante.Nombre}_{postulante.Apellido}_{fechaHoy}{extension}";
+
+                //Limar caracteres invalidos
+                foreach (char c in Path.GetInvalidFileNameChars())
+                {
+                    nombreArchivo = nombreArchivo.Replace(c.ToString(), "");
+                }
+
+                string rutaFinal = Path.Combine(carpetaCV, nombreArchivo);
+
+                using (var stream = new FileStream(rutaFinal, FileMode.Create))
+                {
+                    await postulante.ArchivoCVFile.CopyToAsync(stream);
+                }
+
+                postulante.ArchivoCV = nombreArchivo;
                 postulante.FechaAlta = DateTime.Now;
                 postulante.FechaNacimiento = postulante.FechaNacimiento.Date;
                 _context.Add(postulante);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
-            //ViewData["LocalidadId"] = new SelectList(_context.Localidades, "Id", "Id", postulante.LocalidadId);
-            return View(postulante);
+            
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Postulantes/Edit/5
@@ -98,7 +126,7 @@ namespace WebSiteStartNet2023.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Apellido,DNI,FechaNacimiento,LocalidadId,CodigoArea,TelefonoCelular,Email,ArchivoCV,FechaAlta")] Postulante postulante)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Apellido,DNI,FechaNacimiento,LocalidadId,CodigoArea,TelefonoCelular,Email,ArchivoCV,ArchivoCVFile,FechaAlta")] Postulante postulante)
         {
             if (id != postulante.Id)
             {
@@ -111,8 +139,38 @@ namespace WebSiteStartNet2023.Controllers
             {
                 try
                 {
-                    _context.Update(postulante);
-                    await _context.SaveChangesAsync();
+                    if (postulante.ArchivoCVFile != null && postulante.ArchivoCVFile.Length > 0)
+                    {
+                        string carpetaCV = Path.Combine(_webHostEnvironment.WebRootPath, "CVs");
+                        if (!Directory.Exists(carpetaCV))
+                        {
+                            Directory.CreateDirectory(carpetaCV);
+                        }
+
+                        string extension = Path.GetExtension(postulante.ArchivoCVFile.FileName);
+                        string fechaHoy = DateTime.Now.ToString("yyyyMMdd");
+                        string nombreArchivo = $"{postulante.Nombre}_{postulante.Apellido}_{fechaHoy}{extension}";
+
+                        //Limar caracteres invalidos
+                        foreach (char c in Path.GetInvalidFileNameChars())
+                        {
+                            nombreArchivo = nombreArchivo.Replace(c.ToString(), "");
+                        }
+
+                        string rutaFinal = Path.Combine(carpetaCV, nombreArchivo);
+
+                        using (var stream = new FileStream(rutaFinal, FileMode.Create))
+                        {
+                            await postulante.ArchivoCVFile.CopyToAsync(stream);
+                        }
+
+                        postulante.ArchivoCV = nombreArchivo;
+
+                        _context.Update(postulante);
+                        await _context.SaveChangesAsync();
+
+                    }
+                     
                 }
                 catch (DbUpdateConcurrencyException)
                 {
