@@ -11,6 +11,6 @@ namespace WebSiteStartNet2023.Models
         public string Nombre { get; set; }
 
         //Relaciones
-        public List<IdiomaPostulante>? IdiomaPostulantes { get; set; }
+        //public List<IdiomaPostulante>? IdiomaPostulantes { get; set; }
     }
 }

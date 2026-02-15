@@ -11,7 +11,7 @@ namespace WebSiteStartNet2023.Models
         [Required]
         public string Nombre { get; set; }
 
-        [ForeignKey("NivelEscrituraId")]
-        public List<IdiomaPostulante>? IdiomaPostulante { get; set; }
+        //[ForeignKey("NivelEscrituraId")]
+        //public List<IdiomaPostulante>? IdiomaPostulante { get; set; }
     }
 }

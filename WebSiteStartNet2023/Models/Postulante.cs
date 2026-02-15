@@ -40,17 +40,10 @@ namespace WebSiteStartNet2023.Models
         public int LocalidadId { get; set; }
         public Localidad Localidad { get; set; } //quitar
 
-        //[Required]
-        //public int IdiomaPostulanteId { get; set; }
-        //public IdiomaPostulante IdiomaPostulante { get; set; }
 
-        //[Required]
-        //public int TecnologiaPostulanteId { get; set; }
-        //public ICollection<TecnologiaPostulante> Tecnologias { get; set; }
-
-        //[Required]
-        //public int PuestoTrabajoPostulanteId { get; set; }
-        //public ICollection<PuestoTrabajoPostulante> PuestosTrabajoPostulante { get; set; }
+        public ICollection<IdiomaPostulante> IdiomasPostulantes { get; set; }
+        public ICollection<TecnologiaPostulante> TecnologiasPostulantes { get; set; }
+        public ICollection<PuestoTrabajoPostulante> PuestosTrabajoPostulantes { get; set; }
 
     }
 }

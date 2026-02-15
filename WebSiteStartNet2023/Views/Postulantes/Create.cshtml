@@ -1,4 +1,6 @@
-﻿@model WebSiteStartNet2023.Models.Postulante
+﻿@* //@model WebSiteStartNet2023.Models.Postulante *@
+@model WebSiteStartNet2023.Models.ModelView.PostulanteCreateVM
+
 
 @{
     ViewData["Title"] = "Nuevo Postulantes";
@@ -26,33 +28,33 @@
         <div class="col-3">
 
             <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
+                <label asp-for="Postulante.Nombre" class="control-label"></label>
+                <input asp-for="Postulante.Nombre" class="form-control" />
+                <span asp-validation-for="Postulante.Nombre" class="text-danger"></span>
             </div>
         </div>
         <div class="col-3">
 
             <div class="form-group">
-                <label asp-for="Apellido" class="control-label"></label>
-                <input asp-for="Apellido" class="form-control" />
-                <span asp-validation-for="Apellido" class="text-danger"></span>
+                <label asp-for="Postulante.Apellido" class="control-label"></label>
+                <input asp-for="Postulante.Apellido" class="form-control" />
+                <span asp-validation-for="Postulante.Apellido" class="text-danger"></span>
             </div>
         </div>
          <div class="col-3">
 
             <div class="form-group">
-                <label asp-for="DNI" class="control-label"></label>
-                <input asp-for="DNI" class="form-control" />
-                <span asp-validation-for="DNI" class="text-danger"></span>
+                <label asp-for="Postulante.DNI" class="control-label"></label>
+                <input asp-for="Postulante.DNI" class="form-control" />
+                <span asp-validation-for="Postulante.DNI" class="text-danger"></span>
             </div>
          </div>
          <div class="col-3">
 
                 <div class="form-group">
-                    <label asp-for="FechaNacimiento" class="control-label"></label>
-                    <input asp-for="FechaNacimiento" type="date" class="form-control" />
-                    <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+                    <label asp-for="Postulante.FechaNacimiento" class="control-label"></label>
+                <input asp-for="Postulante.FechaNacimiento" type="date" class="form-control" />
+                <span asp-validation-for="Postulante.FechaNacimiento" class="text-danger"></span>
                 </div>
          </div>
 
@@ -77,8 +79,8 @@
         <div class="col-3">
 
             <div class="form-group">
-                <label asp-for="LocalidadId" class="control-label"></label>
-                <select id="localidadSelect" asp-for="LocalidadId" class="form-control" >
+                <label asp-for="Postulante.LocalidadId" class="control-label"></label>
+                <select id="localidadSelect" asp-for="Postulante.LocalidadId" class="form-control">
                     <option value="">Selecione una localidad</option>
                 </select>
             </div>
@@ -86,82 +88,147 @@
         <div class="col-3">
 
             <div class="form-group">
-                <label asp-for="CodigoArea" class="control-label"></label>
-                <input asp-for="CodigoArea" class="form-control" />
-                <span asp-validation-for="CodigoArea" class="text-danger"></span>
+                <label asp-for="Postulante.CodigoArea" class="control-label"></label>
+                <input asp-for="Postulante.CodigoArea" class="form-control" />
+                <span asp-validation-for="Postulante.CodigoArea" class="text-danger"></span>
             </div>
         </div>
         <div class="col-3">
 
             <div class="form-group">
-                <label asp-for="TelefonoCelular" class="control-label"></label>
-                <input asp-for="TelefonoCelular" class="form-control" />
-                <span asp-validation-for="TelefonoCelular" class="text-danger"></span>
+                <label asp-for="Postulante.TelefonoCelular" class="control-label"></label>
+                <input asp-for="Postulante.TelefonoCelular" class="form-control" />
+                <span asp-validation-for="Postulante.TelefonoCelular" class="text-danger"></span>
             </div>
         </div>
         <div class="col-3">
 
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="Postulante.Email" class="control-label"></label>
+                <input asp-for="Postulante.Email" class="form-control" />
+                <span asp-validation-for="Postulante.Email" class="text-danger"></span>
             </div>
         </div>
     </div>
 
-    <h6>Estudios Realizados</h6>
     <div class="row">
         <div class="col-3">
-            <!--Usar view model en tecnologia-->
-            @*  <div class="form-group">
-                <label asp-for="NivelConocimientoId" class="control-label"></label>
-                <select asp-for="NivelConocimientoId" class="form-control" asp-items="ViewBag.NivelConocimientoId"></select>
-            </div> *@
-        </div>
-         <div class="col-3">
+            <div class="form-group">
+                <label class="control-label">Tecnologia</label>
+                <select asp-for="TecnologiaId" class="form-control">
+                    <option value="">Selecione una tecnologia</option>
+                    @foreach (var Tecno in ViewBag.Tecnologias)
+                    {
+                        <option value="@Tecno.Id">@Tecno.Nombre</option>
 
-          @* <div class="form-group">
-                <label asp-for="institucionId" class="control-label"></label>
-                <select asp-for="institucionId" class="form-control" asp-items="ViewBag.institucionId"></select>
-            </div>  *@
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label class="control-label">Nivel de Conocimiento</label>
+                <select asp-for="NivelConocimientoId" class="form-control">
+                    <option value="">Selecione un nivel de conocimiento</option>
+                    @foreach (var Nivel in ViewBag.NivelesConocimiento)
+                    {
+                        <option value="@Nivel.Id">@Nivel.Nombre</option>
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+            <div class="form-group">
+                <label class="control-label">Idioma</label>
+                <select asp-for="IdiomaId" class="form-control">
+                    <option value="">Selecione un idioma</option>
+                    @foreach (var Idio in ViewBag.Idiomas)
+                    {
+                        <option value="@Idio.Id">@Idio.Nombre</option>
+                    }
+                </select>
+            </div>
+      </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label class="control-label">Nivel oral</label>
+                <select asp-for="NivelOralId" class="form-control">
+                    <option value="">Selecione un nivel oral</option>
+                    @foreach (var Nivel in ViewBag.NivelesOral)
+                    {
+                        <option value="@Nivel.Id">@Nivel.Nombre</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="form-group">
+                <label class="control-label">Nivel escritura</label>
+                <select asp-for="NivelEscrituraId" class="form-control">
+                    <option value="">Selecione un nivel  Escritura</option>
+                    @foreach (var Nivel in ViewBag.NivelesEscritura)
+                    {
+                        <option value="@Nivel.Id">@Nivel.Nombre</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label class="control-label">Nivel Lectura</label>
+                <select asp-for="NivelLecturaId" class="form-control">
+                    <option value="">Selecione un nivel Lectura</option>
+                    @foreach (var Nivel in ViewBag.NivelesLectura)
+                    {
+                        <option value="@Nivel.Id">@Nivel.Nombre</option>
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div class="form-group">
+                <label class="control-label">Puesto de trabajo</label>
+                <select asp-for="PuestoTrabajoId" class="form-control">
+                    <option value="">Selecione un Trabajo</option>
+                    @foreach (var Puesto in ViewBag.PuestosTrabajo)
+                    {
+                        <option value="@Puesto.Id">@Puesto.Nombre</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label class="control-label">Experiencia de trabajo</label>
+                <select asp-for="ExperienciaTrabajoId" class="form-control">
+                    <option value="">Selecione una experiencia </option>
+                    @foreach (var Exper in ViewBag.ExperienciasTrabajo)
+                    {
+                        <option value="@Exper.Id">@Exper.Nombre</option>
+                    }
+                </select>
+            </div>
         </div>
 
     </div>
 
-    <h7>Situacion Laboral Actual</h7>
 
-@*     <div class="row">
-        <div class="col-3">
-
-            <div class="form-group">
-                <label asp-for="PuestoTrabajoId" class="control-label"></label>
-                <select asp-for="PuestoTrabajoId" class="form-control" asp-items="ViewBag.PuestoTrabajoId"></select>
-            </div>
-        </div>
-    </div>
-    <h8>Experiencias Laborales</h8>
-    <div class="row">   
-        <div class="col-3">
-            <div class="form-group">
-                <label asp-for="PuestoTrabajoId" class="control-label"></label>
-                <select asp-for="PuestoTrabajoId" class="form-control" asp-items="ViewBag.PuestoTrabajoId"></select>
-            </div>
-        </div>
-    </div> *@
-
+    
     <div class="row">   
         <div class="col-6">
-
             <div class="form-group">
-                <label asp-for="ArchivoCVFile" class="control-label"></label>
-                <input asp-for="ArchivoCVFile" class="form-control" type="file" />
-                <span asp-validation-for="ArchivoCVFile" class="text-danger"></span>
+                <label asp-for="Postulante.ArchivoCVFile" class="control-label"></label>
+                <input asp-for="Postulante.ArchivoCVFile" class="form-control" type="file" />
+                <span asp-validation-for="Postulante.ArchivoCVFile" class="text-danger"></span>
             </div>
-        </div>    
-    
+        </div>        
     </div>
-
-    
     
     <div class="form-group">
         <input type="submit" value="Crear" class="btn btn-primary" />

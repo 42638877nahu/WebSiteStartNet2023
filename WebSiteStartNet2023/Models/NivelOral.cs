@@ -12,7 +12,7 @@ namespace WebSiteStartNet2023.Models
         public string Nombre { get; set; }
 
         //Relaciones
-        [ForeignKey("NivelOralId")]
-        public List<IdiomaPostulante>? IdiomaPostulante { get; set; }
+        //[ForeignKey("NivelOralId")]
+        //public List<IdiomaPostulante>? IdiomaPostulante { get; set; }
     }
 }

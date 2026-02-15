@@ -1,4 +1,6 @@
-﻿@model IEnumerable<WebSiteStartNet2023.Models.Postulante>
+﻿@* //@model IEnumerable<WebSiteStartNet2023.Models.Postulante>
+ *@
+@model IEnumerable<WebSiteStartNet2023.Models.ModelView.PostulanteIndexVM>
 
 @{
     ViewData["Title"] = "Index";
@@ -21,78 +23,63 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Apellido)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DNI)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaNacimiento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Localidad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CodigoArea)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TelefonoCelular)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ArchivoCV)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaAlta)
-            </th>
-            <th></th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>DNI</th>
+            <th>Fecha Nacimiento</th>
+            <th>Localidad</th>
+            <th>CodigoArea</th>
+            <th>Telefono/Celular</th>
+            <th>Email</th>
+            <th>ArchivoCV</th>
+            <th>FechaAlta</th>
+            <th>Idioma</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
+        @foreach (var item in Model) {
+            <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
+                @Html.DisplayFor(modelItem => item.Postulante.Nombre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Apellido)
+                @Html.DisplayFor(modelItem => item.Postulante.Apellido)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DNI)
+                @Html.DisplayFor(modelItem => item.Postulante.DNI)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FechaNacimiento)
+                @Html.DisplayFor(modelItem => item.Postulante.FechaNacimiento)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Localidad.Id)
+                @Html.DisplayFor(modelItem => item.NombreLocalidadPostulante)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CodigoArea)
+                @Html.DisplayFor(modelItem => item.Postulante.CodigoArea)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TelefonoCelular)
+                @Html.DisplayFor(modelItem => item.Postulante.TelefonoCelular)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                @Html.DisplayFor(modelItem => item.Postulante.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ArchivoCV)
+                @Html.DisplayFor(modelItem => item.Postulante.ArchivoCV)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FechaAlta)
+                @Html.DisplayFor(modelItem => item.Postulante.FechaAlta)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">eliminar</a>
+                @Html.DisplayFor(modelItem => item.NombreIdioma)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Postulante.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Postulante.Id">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.Postulante.Id">eliminar</a>
             </td>
         </tr>
-}
+        }
+
     </tbody>
 </table>

@@ -9,6 +9,6 @@ namespace WebSiteStartNet2023.Models
         [Required]
         public string Nombre { get; set; }
         //Relaciones
-        public List<TecnologiaPostulante>? TecnologiaPostulantes { get; set; }
+        //public List<TecnologiaPostulante>? TecnologiaPostulantes { get; set; }
     }
 }
