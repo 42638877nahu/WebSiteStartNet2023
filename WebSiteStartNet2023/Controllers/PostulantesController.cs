@@ -105,6 +105,11 @@ namespace WebSiteStartNet2023.Controllers
             ModelState.Remove("PuestoTrabajos");
             ModelState.Remove("ExperienciaTrabajos");
 
+            //TODO:Mejorar (quitar del modelo postulante)
+            ModelState.Remove("Postulante.IdiomasPostulantes");
+            ModelState.Remove("Postulante.TecnologiasPostulantes");
+            ModelState.Remove("Postulante.PuestosTrabajoPostulantes");
+
             if (!ModelState.IsValid)
                 return View(postulanteCreate);
 
