@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using WebSiteStartNet2023.Data;
 using WebSiteStartNet2023.Models;
 using WebSiteStartNet2023.Models.ModelView;
@@ -23,11 +22,19 @@ namespace WebSiteStartNet2023.Controllers
         }
 
         // GET: Postulantes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? tecnologiaId)
         {
-            //var applicationDbContext = _context.Postulantes.Include(p => p.Localidad);
-            //return View(await applicationDbContext.ToListAsync());
-            var lista = await _context.Postulantes
+            ViewBag.Tecnologias = _context.Tecnologias.ToList();
+
+            var query = _context.Postulantes.AsQueryable();
+            if (tecnologiaId.HasValue)
+            {
+                query = query.Where(p =>
+                    p.TecnologiasPostulantes
+                     .Any(tp => tp.TecnologiaId == tecnologiaId.Value));
+            }
+
+            var lista = await query
                 .Select(p => new PostulanteIndexVM
                 {
                     Postulante = p,
@@ -48,8 +55,7 @@ namespace WebSiteStartNet2023.Controllers
                     NombreExperienciaTrabajo = p.PuestosTrabajoPostulantes.Where(pp => pp.PostulanteId == p.Id)
                     .Select(pp => pp.ExperienciaTrabajo.Nombre).FirstOrDefault(),
                     NombreLocalidadPostulante = p.Localidad.Nombre
-                })
-                .ToListAsync();
+                }).ToListAsync();
 
             return View(lista);
         }

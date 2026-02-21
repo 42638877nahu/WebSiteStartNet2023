@@ -1,6 +1,4 @@
-﻿@* //@model IEnumerable<WebSiteStartNet2023.Models.Postulante>
- *@
-@model IEnumerable<WebSiteStartNet2023.Models.ModelView.PostulanteIndexVM>
+﻿@model IEnumerable<WebSiteStartNet2023.Models.ModelView.PostulanteIndexVM>
 
 @{
     ViewData["Title"] = "Index";
@@ -16,10 +14,34 @@
     </div>
 </div>
 
-
 <p class="mt-5 mb-5">
     <a asp-action="Create" class="btn btn-primary">Nuevo Postulante</a>
 </p>
+
+<form asp-action="Index" method="get">
+    <div class="form-group">
+        <label>Filtros</label>
+
+        <div class="row">
+            <div class="col-3">
+                <div class="form-group">
+                    <select name="TecnologiaId" class="form-control">
+                        <option value="">-- Todas las tecnologias --</option>
+                        @foreach (var Tecno in ViewBag.Tecnologias)
+                        {
+                            <option value="@Tecno.Id">@Tecno.Nombre</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-4">
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+                <a asp-action="Index" class="btn btn-secondary">Limpiar</a>
+            </div>
+        </div>
+    </div>
+</form>
+
 <table class="table">
     <thead>
         <tr>
