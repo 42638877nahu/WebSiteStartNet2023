@@ -62,21 +62,35 @@ namespace WebSiteStartNet2023.Controllers
                 return NotFound();
             }
 
-            var postulante = await _context.Postulantes
-                .Include(p => p.Localidad)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (postulante == null)
-            {
-                return NotFound();
-            }
-
+            var postulante = await _context.Postulantes.Where(x => x.Id == id)
+                .Select(p => new PostulanteIndexVM
+                {
+                    Postulante = p,
+                    NombreIdioma = p.IdiomasPostulantes
+                        .Where(ip => ip.PostulanteId == p.Id)
+                        .Select(ip => ip.Idioma.Nombre)
+                        .FirstOrDefault(),
+                    NombreTecnologia = p.TecnologiasPostulantes.Where(tp => tp.PostulanteId == p.Id)
+                        .Select(tp => tp.Tecnologia.Nombre)
+                        .FirstOrDefault(),
+                    NombreNivelConocimiento = p.TecnologiasPostulantes.Where(tp => tp.PostulanteId == p.Id)
+                    .Select(tp => tp.NivelConocimiento.Nombre).FirstOrDefault(),
+                    NombreNivelOral = p.IdiomasPostulantes.Where(ip => ip.PostulanteId == p.Id).Select(x => x.NivelOral.Nombre).FirstOrDefault(),
+                    NombreNivelEscritura = p.IdiomasPostulantes.Where(ip => ip.PostulanteId == p.Id).Select(x => x.NivelEscritura.Nombre).FirstOrDefault(),
+                    NombreNivelLectura = p.IdiomasPostulantes.Where(ip => ip.PostulanteId == p.Id).Select(x => x.NivelLectura.Nombre).FirstOrDefault(),
+                    NombrePuestoTrabajo = p.PuestosTrabajoPostulantes.Where(pp => pp.PostulanteId == p.Id)
+                    .Select(pp => pp.PuestoTrabajo.Nombre).FirstOrDefault(),
+                    NombreExperienciaTrabajo = p.PuestosTrabajoPostulantes.Where(pp => pp.PostulanteId == p.Id)
+                    .Select(pp => pp.ExperienciaTrabajo.Nombre).FirstOrDefault(),
+                    NombreLocalidadPostulante = p.Localidad.Nombre
+                }).FirstOrDefaultAsync();
+            
             return View(postulante);
         }
 
         // GET: Postulantes/Create
         public IActionResult Create()
-        {
-            //ViewData["LocalidadId"] = new SelectList(_context.Localidades, "Id", "Id");
+        {            
             ViewBag.Provincias = _context.Provincias.ToList();
             ViewBag.Tecnologias = _context.Tecnologias.ToList();
             ViewBag.NivelesConocimiento = _context.NivelesConocimiento.ToList();
@@ -201,13 +215,23 @@ namespace WebSiteStartNet2023.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Provincias = _context.Provincias.ToList();
+            ViewBag.Tecnologias = _context.Tecnologias.ToList();
+            ViewBag.NivelesConocimiento = _context.NivelesConocimiento.ToList();
+            ViewBag.Idiomas = _context.Idiomas.ToList();
+            ViewBag.NivelesOral = _context.NivelOral.ToList();
+            ViewBag.NivelesEscritura = _context.NivelEscrito.ToList();
+            ViewBag.NivelesLectura = _context.NivelLectura.ToList();
+            ViewBag.PuestosTrabajo = _context.PuestoTrabajos.ToList();
+            ViewBag.ExperienciasTrabajo = _context.ExperienciasTrabajo.ToList();
+            
+            var postulante = await _context.Postulantes.Where(x => x.Id == id)
+                .Select(p => new PostulanteEditarVM
+                {
+                    Postulante = p,
+                  
+                }).FirstOrDefaultAsync();
 
-            var postulante = await _context.Postulantes.FindAsync(id);
-            if (postulante == null)
-            {
-                return NotFound();
-            }
-            ViewData["LocalidadId"] = new SelectList(_context.Localidades, "Id", "Id", postulante.LocalidadId);
             return View(postulante);
         }
 
@@ -216,20 +240,35 @@ namespace WebSiteStartNet2023.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Apellido,DNI,FechaNacimiento,LocalidadId,CodigoArea,TelefonoCelular,Email,ArchivoCV,ArchivoCVFile,FechaAlta")] Postulante postulante)
+        public async Task<IActionResult> Edit(PostulanteEditarVM postulanteEditarVM)
         {
-            if (id != postulante.Id)
+            var postulante = await _context.Postulantes.Where(x => x.Id == postulanteEditarVM.Id).FirstOrDefaultAsync();
+
+            if ( postulante == null)
             {
                 return NotFound();
             }
 
-            ModelState.Remove(nameof(Postulante.Localidad));
+            ModelState.Remove("Postulante.Localidad");
+            ModelState.Remove("Tecnologia");
+            ModelState.Remove("NivelConocimiento");
+            ModelState.Remove("Idioma");
+            ModelState.Remove("NivelOral");
+            ModelState.Remove("NivelEscritura");
+            ModelState.Remove("NivelLectura");
+            ModelState.Remove("PuestoTrabajos");
+            ModelState.Remove("ExperienciaTrabajos");
+
+            //TODO:Mejorar (quitar del modelo postulante)
+            ModelState.Remove("Postulante.IdiomasPostulantes");
+            ModelState.Remove("Postulante.TecnologiasPostulantes");
+            ModelState.Remove("Postulante.PuestosTrabajoPostulantes");
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    if (postulante.ArchivoCVFile != null && postulante.ArchivoCVFile.Length > 0)
+                    if (postulanteEditarVM.Postulante.ArchivoCVFile != null && postulanteEditarVM.Postulante.ArchivoCVFile.Length > 0)
                     {
                         string carpetaCV = Path.Combine(_webHostEnvironment.WebRootPath, "CVs");
                         if (!Directory.Exists(carpetaCV))
@@ -237,9 +276,9 @@ namespace WebSiteStartNet2023.Controllers
                             Directory.CreateDirectory(carpetaCV);
                         }
 
-                        string extension = Path.GetExtension(postulante.ArchivoCVFile.FileName);
+                        string extension = Path.GetExtension(postulanteEditarVM.Postulante.ArchivoCVFile.FileName);
                         string fechaHoy = DateTime.Now.ToString("yyyyMMdd");
-                        string nombreArchivo = $"{postulante.Nombre}_{postulante.Apellido}_{fechaHoy}{extension}";
+                        string nombreArchivo = $"{postulanteEditarVM.Postulante.Nombre}_{postulanteEditarVM.Postulante.Apellido}_{fechaHoy}{extension}";
 
                         //Limar caracteres invalidos
                         foreach (char c in Path.GetInvalidFileNameChars())
@@ -251,16 +290,90 @@ namespace WebSiteStartNet2023.Controllers
 
                         using (var stream = new FileStream(rutaFinal, FileMode.Create))
                         {
-                            await postulante.ArchivoCVFile.CopyToAsync(stream);
+                            await postulanteEditarVM.Postulante.ArchivoCVFile.CopyToAsync(stream);
                         }
 
-                        postulante.ArchivoCV = nombreArchivo;
+                        postulanteEditarVM.Postulante.ArchivoCV = nombreArchivo;
 
-                        _context.Update(postulante);
+                        _context.Postulantes.Update(postulante);
                         await _context.SaveChangesAsync();
 
+                        #region Modificar tecnologias postulante 
+
+                        var tec = await _context.TecnologiasPostulantes.Where(x => x.PostulanteId == postulanteEditarVM.Id).FirstOrDefaultAsync();
+
+                        if (tec == null)
+                        {
+                            var tecnologia = new TecnologiaPostulante
+                            {
+                                PostulanteId = postulanteEditarVM.Postulante.Id,
+                                TecnologiaId = postulanteEditarVM.TecnologiaId,
+                                NivelConocimientoId = postulanteEditarVM.NivelConocimientoId
+                            };
+                            _context.TecnologiasPostulantes.Add(tecnologia);
+                            await _context.SaveChangesAsync();
+                        }
+                        else
+                        {
+                            tec.TecnologiaId = postulanteEditarVM.TecnologiaId;
+                            tec.NivelConocimientoId = postulanteEditarVM.NivelConocimientoId;
+                            _context.TecnologiasPostulantes.Update(tec);
+                            await _context.SaveChangesAsync();
+                        }
+
+                        #endregion
+
+                        #region Modificar idiomas postulante
+                        var Idio = await _context.IdiomasPostulantes.Where(x => x.PostulanteId == postulanteEditarVM.Id).FirstOrDefaultAsync();
+                        if (Idio == null)
+                        {
+                            var idioma = new IdiomaPostulante
+                            {
+                                PostulanteId = postulanteEditarVM.Postulante.Id,
+                                IdiomaId = postulanteEditarVM.IdiomaId,
+                                NivelOralId = postulanteEditarVM.NivelOralId,
+                                NivelEscrituraId = postulanteEditarVM.NivelEscrituraId,
+                                NivelLecturaId = postulanteEditarVM.NivelLecturaId
+                            };
+                            _context.IdiomasPostulantes.Add(idioma);
+                            await _context.SaveChangesAsync();
+                        }
+                        else
+                        {
+                            Idio.IdiomaId = postulanteEditarVM.IdiomaId;
+                            Idio.NivelOralId = postulanteEditarVM.NivelOralId;
+                            Idio.NivelEscrituraId = postulanteEditarVM.NivelEscrituraId;
+                            Idio.NivelLecturaId = postulanteEditarVM.NivelLecturaId;
+                            _context.IdiomasPostulantes.Update(Idio);
+                            await _context.SaveChangesAsync();
+                        }
+                        #endregion
+
+                        #region Modificar puestos trabajos posulantes
+
+                        var Puest = await _context.PuestosTrabajoPostulantes.Where(x => x.PostulanteId == postulanteEditarVM.Id).FirstOrDefaultAsync();
+                        
+                        if (Puest == null)
+                        {
+                            var puestoTrabajo = new PuestoTrabajoPostulante
+                            {
+                                PostulanteId = postulanteEditarVM.Postulante.Id,
+                                PuestoTrabajoId = postulanteEditarVM.PuestoTrabajoId,
+                                ExperienciaTrabajoId = postulanteEditarVM.ExperienciaTrabajoId
+                            };
+                            _context.PuestosTrabajoPostulantes.Add(puestoTrabajo);
+                            await _context.SaveChangesAsync();
+
+                        }
+                        else
+                        {
+                            Puest.PuestoTrabajoId = postulanteEditarVM.PuestoTrabajoId;
+                            Puest.ExperienciaTrabajoId = postulanteEditarVM.ExperienciaTrabajoId;
+                            _context.PuestosTrabajoPostulantes.Update(Puest);
+                            await _context.SaveChangesAsync();                            
+                        }
+                        #endregion
                     }
-                     
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -275,7 +388,18 @@ namespace WebSiteStartNet2023.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LocalidadId"] = new SelectList(_context.Localidades, "Id", "Id", postulante.LocalidadId);
+            else
+            {
+                ViewBag.Provincias = _context.Provincias.ToList();
+                ViewBag.Tecnologias = _context.Tecnologias.ToList();
+                ViewBag.NivelesConocimiento = _context.NivelesConocimiento.ToList();
+                ViewBag.Idiomas = _context.Idiomas.ToList();
+                ViewBag.NivelesOral = _context.NivelOral.ToList();
+                ViewBag.NivelesEscritura = _context.NivelEscrito.ToList();
+                ViewBag.NivelesLectura = _context.NivelLectura.ToList();
+                ViewBag.PuestosTrabajo = _context.PuestoTrabajos.ToList();
+                ViewBag.ExperienciasTrabajo = _context.ExperienciasTrabajo.ToList();
+            }
             return View(postulante);
         }
 
