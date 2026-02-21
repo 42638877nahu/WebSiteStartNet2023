@@ -1,6 +1,5 @@
 ﻿@model WebSiteStartNet2023.Models.ModelView.PostulanteCreateVM
 
-
 @{
     ViewData["Title"] = "Nuevo Postulantes";
 }
@@ -15,16 +14,16 @@
     </div>
 </div>
 
-<h4>Trabaja con nosotros Forma parte de grupo StarNet</h4>
+<p class="mt-3" style="text-align:center">Trabaja con nosotros y forma parte de grupo StarNet</p>
 
-<h5>Datos Personales</h5>
-
-<hr />
 <form asp-action="Create" enctype="multipart/form-data" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+    <h5>Datos Personales</h5>
+    <hr />
+
     <div class="row">
-        <div class="col-3">
+        <div class="col-11 col-md-3 mx-3">
 
             <div class="form-group">
                 <label asp-for="Postulante.Nombre" class="control-label"></label>
@@ -32,51 +31,44 @@
                 <span asp-validation-for="Postulante.Nombre" class="text-danger"></span>
             </div>
         </div>
-        <div class="col-3">
-
+        <div class="col-11 col-md-3 mx-3">
             <div class="form-group">
                 <label asp-for="Postulante.Apellido" class="control-label"></label>
                 <input asp-for="Postulante.Apellido" class="form-control" />
                 <span asp-validation-for="Postulante.Apellido" class="text-danger"></span>
             </div>
         </div>
-         <div class="col-3">
-
+        <div class="col-11 col-md-3 mx-3">
             <div class="form-group">
                 <label asp-for="Postulante.DNI" class="control-label"></label>
                 <input asp-for="Postulante.DNI" class="form-control" />
                 <span asp-validation-for="Postulante.DNI" class="text-danger"></span>
             </div>
          </div>
-         <div class="col-3">
-
-                <div class="form-group">
-                    <label asp-for="Postulante.FechaNacimiento" class="control-label"></label>
-                <input asp-for="Postulante.FechaNacimiento" type="date" class="form-control" />
-                <span asp-validation-for="Postulante.FechaNacimiento" class="text-danger"></span>
-                </div>
+        <div class="col-11 col-md-3 mx-3">
+            <div class="form-group">
+                <label asp-for="Postulante.FechaNacimiento" class="control-label"></label>
+            <input asp-for="Postulante.FechaNacimiento" type="date" class="form-control" />
+            <span asp-validation-for="Postulante.FechaNacimiento" class="text-danger"></span>
+            </div>
          </div>
 
 
     </div>
     <div class="row">
-        <div class="col-3">
-
-            <!--Usar view model-->
+        <div class="col-11 col-md-3 mx-3">
             <div class="form-group">
                 <label  class="control-label">Provincia</label>
                 <select id="provinciaSelect" class="form-control">
                     <option value="">Selecione una provincia</option>
                     @foreach (var Prov in ViewBag.Provincias)
-                        {
-                            <option value="@Prov.Id">@Prov.Nombre</option>
-
-                        }
+                    {
+                        <option value="@Prov.Id">@Prov.Nombre</option>
+                    }
                 </select>
             </div>
         </div>
-        <div class="col-3">
-
+        <div class="col-11 col-md-3 mx-3">
             <div class="form-group">
                 <label asp-for="Postulante.LocalidadId" class="control-label"></label>
                 <select id="localidadSelect" asp-for="Postulante.LocalidadId" class="form-control">
@@ -84,24 +76,21 @@
                 </select>
             </div>
         </div>
-        <div class="col-3">
-
+        <div class="col-11 col-md-3 mx-3">
             <div class="form-group">
                 <label asp-for="Postulante.CodigoArea" class="control-label"></label>
                 <input asp-for="Postulante.CodigoArea" class="form-control" />
                 <span asp-validation-for="Postulante.CodigoArea" class="text-danger"></span>
             </div>
         </div>
-        <div class="col-3">
-
+        <div class="col-11 col-md-3 mx-3">
             <div class="form-group">
                 <label asp-for="Postulante.TelefonoCelular" class="control-label"></label>
                 <input asp-for="Postulante.TelefonoCelular" class="form-control" />
                 <span asp-validation-for="Postulante.TelefonoCelular" class="text-danger"></span>
             </div>
         </div>
-        <div class="col-3">
-
+        <div class="col-11 col-md-3 mx-3">
             <div class="form-group">
                 <label asp-for="Postulante.Email" class="control-label"></label>
                 <input asp-for="Postulante.Email" class="form-control" />
@@ -110,8 +99,11 @@
         </div>
     </div>
 
+    <h5 class="mt-3">Tecnologias</h5>
+    <hr />
+
     <div class="row">
-        <div class="col-3">
+        <div class="col-11 col-md-3 mx-3">
             <div class="form-group">
                 <label class="control-label">Tecnologia</label>
                 <select asp-for="TecnologiaId" class="form-control">
@@ -119,12 +111,11 @@
                     @foreach (var Tecno in ViewBag.Tecnologias)
                     {
                         <option value="@Tecno.Id">@Tecno.Nombre</option>
-
                     }
                 </select>
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-11 col-md-3 mx-3">
             <div class="form-group">
                 <label class="control-label">Nivel de Conocimiento</label>
                 <select asp-for="NivelConocimientoId" class="form-control">
@@ -138,8 +129,11 @@
         </div>
     </div>
 
+    <h5 class="mt-3">Idiomas</h5>
+    <hr />
+
     <div class="row">
-        <div class="col-3">
+        <div class="col-11 col-md-3 mx-3">
             <div class="form-group">
                 <label class="control-label">Idioma</label>
                 <select asp-for="IdiomaId" class="form-control">
@@ -150,8 +144,8 @@
                     }
                 </select>
             </div>
-      </div>
-        <div class="col-3">
+        </div>
+        <div class="col-11 col-md-3 mx-3">
             <div class="form-group">
                 <label class="control-label">Nivel oral</label>
                 <select asp-for="NivelOralId" class="form-control">
@@ -164,7 +158,7 @@
             </div>
         </div>
 
-        <div class="col-3">
+        <div class="col-11 col-md-3 mx-3">
             <div class="form-group">
                 <label class="control-label">Nivel escritura</label>
                 <select asp-for="NivelEscrituraId" class="form-control">
@@ -176,7 +170,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-11 col-md-3 mx-3">
             <div class="form-group">
                 <label class="control-label">Nivel Lectura</label>
                 <select asp-for="NivelLecturaId" class="form-control">
@@ -189,8 +183,12 @@
             </div>
         </div>
     </div>
+
+    <h5 class="mt-3">Puestos</h5>
+    <hr />
+
     <div class="row">
-        <div class="col-3">
+        <div class="col-11 col-md-3 mx-3">
             <div class="form-group">
                 <label class="control-label">Puesto de trabajo</label>
                 <select asp-for="PuestoTrabajoId" class="form-control">
@@ -202,7 +200,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-11 col-md-3 mx-3">
             <div class="form-group">
                 <label class="control-label">Experiencia de trabajo</label>
                 <select asp-for="ExperienciaTrabajoId" class="form-control">
@@ -217,10 +215,8 @@
 
     </div>
 
-
-    
     <div class="row">   
-        <div class="col-6">
+        <div class="col-11 col-md-6 mx-3">
             <div class="form-group">
                 <label asp-for="Postulante.ArchivoCVFile" class="control-label"></label>
                 <input asp-for="Postulante.ArchivoCVFile" class="form-control" type="file" />
@@ -229,15 +225,14 @@
         </div>        
     </div>
     
-    <div class="form-group">
-        <input type="submit" value="Crear" class="btn btn-primary" />
+    <div class="col-2 col-md-4 mt-3 mx-3">
+        <div class="form-group">
+            <input type="submit" value="Crear" class="btn btn-primary" />
+            <a asp-action="Index">Volver</a>
+        </div>
     </div>
 </form>
 
-
-<div>
-    <a asp-action="Index">Volver</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
