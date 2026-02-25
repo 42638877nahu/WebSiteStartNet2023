@@ -16,12 +16,23 @@
 
 <h4>Trabaja con nosotros Forma parte de grupo StarNet</h4>
 
-<h5>Datos Personales</h5>
 
-<hr />
 <form asp-action="Edit" enctype="multipart/form-data" method="post">
     
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {        
+        <div class="col-12 col-md-12 px-2">
+            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                @TempData["SuccessMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        </div>
+    }
+
+    <h5>Datos Personales</h5>
+    <hr />
 
     <div class="row">
         <div class="col-3">
@@ -229,6 +240,7 @@
 
     <div class="form-group">
         <input type="submit" value="Guardar" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-secondary ms-2">Volver</a>
     </div>
 </form>
 

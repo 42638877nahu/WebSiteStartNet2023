@@ -24,7 +24,7 @@ namespace WebSiteStartNet2023.Controllers
         // GET: Postulantes
         public async Task<IActionResult> Index(int? tecnologiaId)
         {
-            ViewBag.Tecnologias = _context.Tecnologias.ToList();
+            ViewBag.Tecnologias = await _context.Tecnologias.ToListAsync();
 
             var query = _context.Postulantes.AsQueryable();
             if (tecnologiaId.HasValue)
@@ -95,19 +95,18 @@ namespace WebSiteStartNet2023.Controllers
         }
 
         // GET: Postulantes/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {            
-            ViewBag.Provincias = _context.Provincias.ToList();
-            ViewBag.Tecnologias = _context.Tecnologias.ToList();
-            ViewBag.NivelesConocimiento = _context.NivelesConocimiento.ToList();
-            ViewBag.Idiomas = _context.Idiomas.ToList();
-            ViewBag.NivelesOral = _context.NivelOral.ToList();
-            ViewBag.NivelesEscritura = _context.NivelEscrito.ToList();
-            ViewBag.NivelesLectura = _context.NivelLectura.ToList();
-            ViewBag.PuestosTrabajo = _context.PuestoTrabajos.ToList();
-            ViewBag.ExperienciasTrabajo = _context.ExperienciasTrabajo.ToList();
+            ViewBag.Provincias = await _context.Provincias.ToListAsync();
+            ViewBag.Tecnologias = await _context.Tecnologias.ToListAsync();
+            ViewBag.NivelesConocimiento = await _context.NivelesConocimiento.ToListAsync();
+            ViewBag.Idiomas = await _context.Idiomas.ToListAsync();
+            ViewBag.NivelesOral = await _context.NivelOral.ToListAsync();
+            ViewBag.NivelesEscritura = await _context.NivelEscrito.ToListAsync();
+            ViewBag.NivelesLectura = await _context.NivelLectura.ToListAsync();
+            ViewBag.PuestosTrabajo = await _context.PuestoTrabajos.ToListAsync();
+            ViewBag.ExperienciasTrabajo = await _context.ExperienciasTrabajo.ToListAsync();
             return View();
-
         }
 
 
@@ -210,35 +209,35 @@ namespace WebSiteStartNet2023.Controllers
 
             }
 
-            return RedirectToAction(nameof(Index));
+            TempData["SuccessMessage"] = "Tu postulación fue enviada correctamente.";
+            return RedirectToAction(nameof(Create));
         }
 
         // GET: Postulantes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            ViewBag.Provincias = _context.Provincias.ToList();
-            if (id == null || _context.Postulantes == null)
+            var postulantedb = await _context.Postulantes.Where(x => x.Id == id).FirstOrDefaultAsync();
+            
+            ViewBag.Provincias = await _context.Provincias.ToListAsync();
+            ViewBag.Tecnologias = await _context.Tecnologias.ToListAsync();
+            ViewBag.NivelesConocimiento = await _context.NivelesConocimiento.ToListAsync();
+            ViewBag.Idiomas = await _context.Idiomas.ToListAsync();
+            ViewBag.NivelesOral = await _context.NivelOral.ToListAsync();
+            ViewBag.NivelesEscritura = await _context.NivelEscrito.ToListAsync();
+            ViewBag.NivelesLectura = await _context.NivelLectura.ToListAsync();
+            ViewBag.PuestosTrabajo = await _context.PuestoTrabajos.ToListAsync();
+            ViewBag.ExperienciasTrabajo = await _context.ExperienciasTrabajo.ToListAsync();
+
+            if (id == null || postulantedb == null)
             {
                 return NotFound();
-            }
-            ViewBag.Provincias = _context.Provincias.ToList();
-            ViewBag.Tecnologias = _context.Tecnologias.ToList();
-            ViewBag.NivelesConocimiento = _context.NivelesConocimiento.ToList();
-            ViewBag.Idiomas = _context.Idiomas.ToList();
-            ViewBag.NivelesOral = _context.NivelOral.ToList();
-            ViewBag.NivelesEscritura = _context.NivelEscrito.ToList();
-            ViewBag.NivelesLectura = _context.NivelLectura.ToList();
-            ViewBag.PuestosTrabajo = _context.PuestoTrabajos.ToList();
-            ViewBag.ExperienciasTrabajo = _context.ExperienciasTrabajo.ToList();
-            
-            var postulante = await _context.Postulantes.Where(x => x.Id == id)
-                .Select(p => new PostulanteEditarVM
+            } else
+            {
+                return View(new PostulanteEditarVM
                 {
-                    Postulante = p,
-                  
-                }).FirstOrDefaultAsync();
-
-            return View(postulante);
+                    Postulante = postulantedb
+                });
+            }
         }
 
         // POST: Postulantes/Edit/5
@@ -252,6 +251,15 @@ namespace WebSiteStartNet2023.Controllers
 
             if ( postulante == null)
             {
+                ViewBag.Provincias = await _context.Provincias.ToListAsync();
+                ViewBag.Tecnologias = await _context.Tecnologias.ToListAsync();
+                ViewBag.NivelesConocimiento = await _context.NivelesConocimiento.ToListAsync();
+                ViewBag.Idiomas = await _context.Idiomas.ToListAsync();
+                ViewBag.NivelesOral = await _context.NivelOral.ToListAsync();
+                ViewBag.NivelesEscritura = await _context.NivelEscrito.ToListAsync();
+                ViewBag.NivelesLectura = await _context.NivelLectura.ToListAsync();
+                ViewBag.PuestosTrabajo = await _context.PuestoTrabajos.ToListAsync();
+                ViewBag.ExperienciasTrabajo = await _context.ExperienciasTrabajo.ToListAsync();
                 return NotFound();
             }
 
@@ -392,20 +400,22 @@ namespace WebSiteStartNet2023.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+
+                TempData["SuccessMessage"] = "La postulación fue modificada correctamente.";
+                return RedirectToAction(nameof(Edit));
             }
             else
             {
-                ViewBag.Provincias = _context.Provincias.ToList();
-                ViewBag.Tecnologias = _context.Tecnologias.ToList();
-                ViewBag.NivelesConocimiento = _context.NivelesConocimiento.ToList();
-                ViewBag.Idiomas = _context.Idiomas.ToList();
-                ViewBag.NivelesOral = _context.NivelOral.ToList();
-                ViewBag.NivelesEscritura = _context.NivelEscrito.ToList();
-                ViewBag.NivelesLectura = _context.NivelLectura.ToList();
-                ViewBag.PuestosTrabajo = _context.PuestoTrabajos.ToList();
-                ViewBag.ExperienciasTrabajo = _context.ExperienciasTrabajo.ToList();
-            }
+                ViewBag.Provincias = await _context.Provincias.ToListAsync();
+                ViewBag.Tecnologias = await _context.Tecnologias.ToListAsync();
+                ViewBag.NivelesConocimiento = await _context.NivelesConocimiento.ToListAsync();
+                ViewBag.Idiomas = await _context.Idiomas.ToListAsync();
+                ViewBag.NivelesOral = await _context.NivelOral.ToListAsync();
+                ViewBag.NivelesEscritura = await _context.NivelEscrito.ToListAsync();
+                ViewBag.NivelesLectura = await _context.NivelLectura.ToListAsync();
+                ViewBag.PuestosTrabajo = await _context.PuestoTrabajos.ToListAsync();
+                ViewBag.ExperienciasTrabajo = await _context.ExperienciasTrabajo.ToListAsync();
+            }            
             return View(postulante);
         }
 
