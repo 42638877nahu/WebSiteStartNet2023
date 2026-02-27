@@ -54,6 +54,25 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="ContentAdmin" asp-controller="Contactos" asp-action="Index">Contactos</a>
                         </li>
+                        <!--Nuevo menu para administradores-->
+                        <div class="dropdown">
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Postulaciones</a>
+                                <ul class="dropdown-menu m-0">
+                                    <a asp-area="ContentAdmin" asp-controller="Provincias" asp-action="Index" class="dropdown-item">Provincias</a>
+                                    <a asp-area="ContentAdmin" asp-controller="Localidades" asp-action="Index" class="dropdown-item">Localidades</a>
+                                    <a asp-area="ContentAdmin" asp-controller="Idiomas" asp-action="Index" class="dropdown-item">Idiomas</a>
+                                    <a asp-area="ContentAdmin" asp-controller="PuestoTrabajoes" asp-action="Index" class="dropdown-item">Puesto Trabajo</a>
+                                    <a asp-area="ContentAdmin" asp-controller="NivelConocimientoes" asp-action="Index" class="dropdown-item">Nivel Conocimiento</a>
+                                    <a asp-area="ContentAdmin" asp-controller="ExperienciaTrabajoes" asp-action="Index" class="dropdown-item">Experiencia Trabajo</a>
+                                    <a asp-area="ContentAdmin" asp-controller="Tecnologias" asp-action="Index" class="dropdown-item">Tecnologias</a>
+                                    <a asp-area="ContentAdmin" asp-controller="NivelOral" asp-action="Index" class="dropdown-item">Nivel Oral</a>
+                                    <a asp-area="ContentAdmin" asp-controller="NivelLectura" asp-action="Index" class="dropdown-item">Nivel Lectura</a>
+                                    <a asp-area="ContentAdmin" asp-controller="NivelEscrito" asp-action="Index" class="dropdown-item">Nivel Escrito</a>
+                                    <a asp-area="ContentAdmin" asp-controller="Postulantes" asp-action="Index" class="dropdown-item">ABM Postulantes</a>
+                                </ul>
+                            </div>
+                        </div>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

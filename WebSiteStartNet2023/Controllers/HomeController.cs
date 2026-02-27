@@ -20,12 +20,14 @@ namespace WebSiteStartNet2023.Controllers
         private readonly ApplicationDbContext _context;
         private readonly ILogger<HomeController> _logger;
         private readonly GoogleCaptchaService _captchaService;
+        private readonly IWebHostEnvironment _environment;
 
-        public HomeController(ILogger<HomeController> logger,ApplicationDbContext context,GoogleCaptchaService captchaService)
+        public HomeController(ILogger<HomeController> logger,ApplicationDbContext context,GoogleCaptchaService captchaService, IWebHostEnvironment environment)
         {
             _logger = logger;
             _context = context;
             _captchaService = captchaService;
+            _environment = environment;
         }
 
         public IActionResult Index()
@@ -84,13 +86,16 @@ namespace WebSiteStartNet2023.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Contacto([Bind("Id,Nombre,Apellido,AreaCelular,TeléfonoCelular,Email,Mensaje,Fecha,Area,SubArea,Token")]Contacto contacto)
         {
-            //Verificar Respuesta de Token de Google
-            var capthaResult = await _captchaService.VerifyToken(contacto.Token);
-            if (!capthaResult)
+            if (!_environment.IsDevelopment())
             {
-                return RedirectToAction(nameof(Contacto));
+                //Verificar Respuesta de Token de Google
+                var capthaResult = await _captchaService.VerifyToken(contacto.Token);
+                if (!capthaResult)
+                {
+                    ModelState.AddModelError("", "Captcha inválido");
+                    return RedirectToAction(nameof(Contacto));
+                }
             }
-
 
             contacto.Fecha = DateTime.Now;
 
@@ -142,11 +147,15 @@ namespace WebSiteStartNet2023.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CV([Bind("Id,Nombre,Apellido,Localidad,Provincia,CodigoArea,TeléfonoCelular,Email,NombreArchivo,Archivo,Fecha,Token")]CV cv)
         {
-            //Verificar Respuesta de Token de Google
-            var capthaResult = await _captchaService.VerifyToken(cv.Token);
-            if (!capthaResult)
+            if (!_environment.IsDevelopment())
             {
-                return RedirectToAction(nameof(CV));
+                //Verificar Respuesta de Token de Google
+                var capthaResult = await _captchaService.VerifyToken(cv.Token);
+                if (!capthaResult)
+                {
+                    ModelState.AddModelError("", "Captcha inválido");
+                    return RedirectToAction(nameof(CV));
+                }
             }
 
             cv.Fecha = DateTime.Now;
