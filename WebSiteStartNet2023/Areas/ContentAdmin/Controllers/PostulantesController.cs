@@ -194,6 +194,19 @@ namespace WebSiteStartNet2023.Areas.ContentAdmin.Controllers
 
                         postulanteEditarVM.Postulante.ArchivoCV = nombreArchivo;
 
+                        #region Actualizar los campos
+                        postulante.Nombre = postulanteEditarVM.Postulante.Nombre;
+                        postulante.Apellido = postulanteEditarVM.Postulante.Apellido;
+                        postulante.DNI = postulanteEditarVM.Postulante.DNI;
+                        postulante.LocalidadId = postulanteEditarVM.Postulante.LocalidadId;
+                        postulante.CodigoArea = postulanteEditarVM.Postulante.CodigoArea;
+                        postulante.TelefonoCelular = postulanteEditarVM.Postulante.TelefonoCelular;
+                        postulante.Email = postulanteEditarVM.Postulante.Email;
+                        postulante.FechaNacimiento = postulanteEditarVM.Postulante.FechaNacimiento;
+                        postulante.ArchivoCV = postulanteEditarVM.Postulante.ArchivoCV;
+
+                        #endregion 
+
                         _context.Postulantes.Update(postulante);
                         await _context.SaveChangesAsync();
 
